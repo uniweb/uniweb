@@ -66,3 +66,7 @@ The Uniweb app is the "head" in this architecture—a real publishing surface wh
 ## License
 
 Apache 2.0 - See [LICENSE](LICENSE) for details.
+
+---
+
+Uniweb is a trademark of [Proximify Inc.](https://proximify.com)
