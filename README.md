@@ -43,7 +43,7 @@ There's no heavy framework to learn. Foundations are React component libraries b
 ## How It Works
 
 **For Foundation Developers:**
-Build a Foundation once—a React component library with metadata that defines what creators can do. Components receive content and params as props and generates a purposeful rendering within your design system.
+Build a Foundation once—a React component library with metadata that defines what creators can do. Components receive content and params as props and generates purposeful renderings within your design system.
 
 **For Site Developers:**
 Use `@uniweb/runtime` to load Foundations dynamically via import maps, or bundle them statically for maximum performance.
