@@ -9,13 +9,14 @@ Content/code separation, file-based routing, localization, semantic markdown—a
 ## Quick Start
 
 ```bash
-npx uniweb create my-project
+npx uniweb@latest create my-project
 cd my-project
 pnpm install
 pnpm dev
 ```
 
 You get a workspace with two packages:
+
 - **`site/`** — Content, pages, entry point
 - **`foundation/`** — Your React components
 
@@ -122,7 +123,7 @@ mv foundation foundations/marketing
 Starting fresh? Use the multi template:
 
 ```bash
-npx uniweb create my-workspace --template multi
+npx uniweb@latest create my-workspace --template multi
 ```
 
 ```
