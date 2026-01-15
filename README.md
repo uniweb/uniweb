@@ -144,8 +144,8 @@ Other projects can use your components. Updates propagate automatically.
 The structure you start with scales without rewrites:
 
 1. **Single project** — One site, one component library. Most projects stay here.
-2. **Multi-site** — Share components across projects. Your `foundation/` becomes a dependency.
-3. **Full platform** — [uniweb.app](https://uniweb.app) adds visual editing, live content management, structured data, and team collaboration. Your static markdown files become a dynamic CMS—no architecture changes needed.
+2. **Multi-site** — One Foundation powers multiple sites. Release it once, updates propagate automatically—no rebuilds needed.
+3. **Full platform** — [uniweb.app](https://uniweb.app) adds visual editing, live content management, structured data, and team collaboration. Your Foundation plugs in and its components become native to the editor. Content creators work on real pages instantly.
 
 Start with local markdown files deployed to Vercel. Grow to a collaborative content platform when you need it. Everything is wired from the start; you just connect it.
 
