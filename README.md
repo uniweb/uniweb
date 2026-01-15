@@ -41,6 +41,8 @@ my-project/
                 └── index.jsx
 ```
 
+**Pages are folders.** Create `pages/about/` with a markdown file inside → visit `/about`. That's the whole routing model.
+
 ### Content as Markdown
 
 ```markdown
