@@ -104,10 +104,10 @@ The structure is designed to grow with you.
 
 ### Multiple Sites
 
-When you need multiple sites or foundations, use the workspace template:
+When you need multiple sites or foundations, use the multi template:
 
 ```bash
-npx uniweb create my-workspace --template workspace
+npx uniweb create my-workspace --template multi
 ```
 
 ```
