@@ -77,10 +77,10 @@ The framework is open source (GPL-3.0). Foundations you build are yours to licen
 ## Try It
 
 ```bash
-npx @uniwebcms/framework@latest create my-project --template marketing
+npx @uniweb@latest create my-project
 cd my-project
-npm install
-npx uniweb start
+pnpm install
+pnpm dev
 ```
 
 You'll get a Foundation with example components and a demo site. See what the runtime handles. See what you actually build. Check if it matches your workflow.

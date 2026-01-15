@@ -44,7 +44,7 @@ The framework's runtime takes care of this undifferentiated work. It's a lightwe
 
 **Data fetching.** Need API data or database content? The runtime fetches it before rendering. Your component receives data ready to use. You don't write loading states or error handling for data sources the runtime manages.
 
-**Framework components.** The `@uniwebcms/basic` package provides Section, Image, Link, Form, and more—all wrappers around runtime functionality. These handle accessibility, performance, edge cases. More importantly, they protect your Foundations from runtime implementation changes. The runtime evolves, but your components work with a stable interface.
+**Framework components.** The `@uniweb/kit` package provides Section, Image, Link, Form, and more—all wrappers around runtime functionality. These handle accessibility, performance, edge cases. More importantly, they protect your Foundations from runtime implementation changes. The runtime evolves, but your components work with a stable interface.
 
 This isn't about limiting what you can build. It's about not writing the same infrastructure code in every Foundation. Handle what's unique to your design system. Let the runtime handle what's common to every site.
 
@@ -101,10 +101,10 @@ That's the independence.
 ## Try It
 
 ```bash
-npx @uniwebcms/framework@latest create my-project --template marketing
+npx @uniweb@latest create my-project
 cd my-project
-npm install
-npx uniweb start
+pnpm install
+pnpm dev
 ```
 
 You'll get a Foundation with example components and a demo site. See how it works. Modify components. Check the docs at [docs.framework.uniweb.app](https://docs.framework.uniweb.app).

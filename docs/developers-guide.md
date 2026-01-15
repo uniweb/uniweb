@@ -380,13 +380,13 @@ function ProductList({ content, params, block }) {
 ## Getting Started
 
 ```bash
-# Create a development project with a Foundation
-npx @uniwebcms/framework@latest create my-project --site demo --module marketing
+# Create a development project with a Foundation and a site
+npx @uniweb@latest create my-project
 ```
 
 This creates:
 
-- A Foundation module at `src/marketing`
+- A Foundation at `src/marketing`
 - A demo site at `sites/demo` for testing
 
 Then add components:
