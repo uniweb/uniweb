@@ -135,17 +135,17 @@ my-workspace/
     └── documentation/   # Docs components
 ```
 
-### Publish Your Foundation
+### Release Your Foundation
 
-Your `foundation/` folder is already a complete package. When ready:
+Publish your foundation to [uniweb.app](https://uniweb.app) to make it available for your sites:
 
 ```bash
-cd foundation
+uniweb login          # First time only
 uniweb build
-npm publish
+uniweb publish
 ```
 
-Other projects can use your components. Updates propagate automatically.
+You own your foundations and license them to sites. When you release updates, linked sites receive them automatically.
 
 ## Packages
 
