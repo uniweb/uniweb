@@ -71,14 +71,17 @@ description: Welcome to Uniweb
 ```markdown
 ---
 component: Hero
-title: Welcome to Uniweb
-subtitle: Build modern websites with ease
-ctaText: Learn More
-ctaUrl: "#features"
+theme: dark
 ---
 
-Optional markdown body content goes here.
+# Welcome to Uniweb
+
+Build modern websites with ease.
+
+[Learn More](#features)
 ```
+
+Frontmatter specifies the component and configuration. The markdown body contains the content, which is semantically parsed (H1 → title, paragraphs → description, links → CTAs).
 
 ### Arrays in YAML
 
@@ -282,9 +285,11 @@ description: Learn more about our company
 
 ---
 component: Hero
-title: About Us
-subtitle: Our story and mission
 ---
+
+# About Us
+
+Our story and mission.
 ```
 
 4. The page is automatically available at `/about`

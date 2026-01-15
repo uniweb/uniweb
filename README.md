@@ -46,35 +46,41 @@ my-project/
 ```markdown
 ---
 component: Hero
-title: Welcome
-subtitle: Build something great
-ctaText: Get Started
+theme: dark
 ---
 
-Optional body content here.
+# Welcome
+
+Build something great.
+
+[Get Started](#)
 ```
 
-The `component` field maps to your React component. Frontmatter becomes props. Body becomes structured content. No parsing code to write.
+Frontmatter specifies the component and configuration. The body contains the actual content—headings, paragraphs, links, images—which gets semantically parsed into structured data your component receives.
 
 ### Components as React
 
 ```jsx
-export function Hero({ content }) {
-  const { title, subtitle, ctaText } = content;
+export function Hero({ content, params }) {
+  const { title } = content.main.header;
+  const { paragraphs, links } = content.main.body;
+  const { theme = 'light' } = params;
 
   return (
-    <section className="py-20 text-center">
+    <section className={`py-20 text-center ${theme === 'dark' ? 'bg-gray-900 text-white' : ''}`}>
       <h1 className="text-4xl font-bold">{title}</h1>
-      <p className="text-xl text-gray-600">{subtitle}</p>
-      <button className="mt-8 px-6 py-3 bg-blue-600 text-white rounded">
-        {ctaText}
-      </button>
+      <p className="text-xl text-gray-600">{paragraphs[0]}</p>
+      {links[0] && (
+        <a href={links[0].url} className="mt-8 px-6 py-3 bg-blue-600 text-white rounded inline-block">
+          {links[0].text}
+        </a>
+      )}
     </section>
   );
 }
 ```
 
-Standard React. Standard Tailwind. No special APIs to learn.
+Standard React. Standard Tailwind. Content is automatically parsed from markdown into structured objects.
 
 ## Why This Structure
 
