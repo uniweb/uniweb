@@ -19,7 +19,7 @@ You get a working Vite + React site with:
 - **`site/`** — Content, pages, entry point
 - **`foundation/`** — Your React components
 
-Both are proper packages. Add dependencies where they belong. Scale when you need to.
+**Why two packages?** Your components are immediately publishable—no extraction step when you want to reuse them across projects or share with others. For small projects, you'll barely notice the separation. For larger ones, you'll appreciate it.
 
 ## What You Get
 
@@ -80,23 +80,29 @@ export function Hero({ content, params }) {
 }
 ```
 
-Standard React. Standard Tailwind. Content is automatically parsed from markdown into structured objects.
+Standard React. Standard Tailwind. Content is automatically parsed from markdown into structured objects—with sensible defaults and configurable mapping patterns when you need more control.
 
 ## Why This Structure
 
 | Feature | What It Means |
 |---------|---------------|
-| **Two packages** | Clear separation—content deps vs component deps |
+| **Two packages** | Components are publishable from day one—no extraction needed |
 | **File-based routing** | `pages/about/` → `/about` |
 | **Localization built-in** | `locales/es/about/` → Spanish version |
-| **Semantic content** | Markdown parsed into structured objects |
-| **Visual editor ready** | Integrates with [uniweb.app](https://uniweb.app) for non-developers |
+| **Semantic content** | Markdown → structured objects, with configurable mappings |
+| **No lock-in** | Standard React components, leave anytime |
 
 ## Scaling Up
 
 The structure is designed to grow with you.
 
 ### Multiple Sites
+
+When you need multiple sites or foundations, use the workspace template:
+
+```bash
+npx uniweb create my-workspace --template workspace
+```
 
 ```
 my-workspace/
@@ -120,10 +126,6 @@ npm publish
 
 Other projects can use your components. Updates propagate automatically.
 
-### Visual Editing
-
-For teams with non-developers, [uniweb.app](https://uniweb.app) provides a visual editor that reads your Foundation and presents components as drag-and-drop building blocks. Same content format, no code changes needed.
-
 ## Packages
 
 | Package | Description |
@@ -134,19 +136,22 @@ For teams with non-developers, [uniweb.app](https://uniweb.app) provides a visua
 
 ## The Bigger Picture
 
-Uniweb is a **Component Web Platform**—it manages how content becomes pages through components.
+The structure you start with scales without rewrites:
 
-- **Foundations** define the vocabulary: section types, options, constraints
-- **Sites** are pure content that flows through Foundations
-- **The Capability Boundary** protects design coherence as sites evolve
+1. **Single project** — One site, one component library. Most projects stay here.
+2. **Multi-site** — Share components across projects. Your `foundation/` becomes a dependency.
+3. **Visual editing** — [uniweb.app](https://uniweb.app) reads your components and lets non-developers build pages. Optional, and the CLI works fine without it.
 
-Start with a single project. Graduate to multi-site architecture when you need it. Add visual editing when your team grows. The foundation you build today works at every scale.
+The separation between content (`site/`) and components (`foundation/`) is what makes this possible. Content authors can't break components; component updates flow to all sites using them.
 
 ## Documentation
 
-- [Getting Started](docs/getting-started/understanding-uniweb.md)
-- [Foundation Development](docs/foundations/development.md)
-- [CLI Reference](docs/reference/cli.md)
+Full documentation at **[docs.uniweb.io](https://docs.uniweb.io)**:
+
+- Getting Started — project setup, adding pages, creating components
+- Content Authoring — markdown format, semantic structure, localization
+- Component Development — props, content mapping, presets
+- Deployment — Vercel, static hosting, SSR options
 
 ## License
 
