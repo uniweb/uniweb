@@ -1,71 +1,150 @@
 # Uniweb
 
-**Component Web Platform**
+**Structured Vite + React, ready to go.**
 
-The content–component bridge for domain-adaptable publishing.
+Content/code separation, file-based routing, localization, semantic markdown—all wired up. No framework to learn. Foundation-ready from day one.
 
 ---
 
 ## Quick Start
 
-Create a new Uniweb project with a starter template:
-
 ```bash
-npx uniweb@latest create my-project --template workspace
-```
-
-This scaffolds a Vite project with everything wired—routing, state, and build pipeline ready. You get a site and a Foundation in a monorepo, pre-configured to work together.
-
-```bash
+npx uniweb create my-project
 cd my-project
 pnpm install
 pnpm dev
 ```
 
-## What is Uniweb?
+You get a working Vite + React site with:
+- **`site/`** — Content, pages, entry point
+- **`foundation/`** — Your React components
 
-Uniweb manages how content becomes pages through components. It bridges structured content and purpose-built component systems (called **Foundations**) into a cohesive publishing experience.
+Both are proper packages. Add dependencies where they belong. Scale when you need to.
 
-There's no heavy framework to learn. Foundations are React component libraries built with Vite and styled with Tailwind. Sites are Vite apps that load content and options from markdown files with frontmatter. The CLI handles the wiring so you can focus on components and content.
+## What You Get
 
-- **Foundations** define the vocabulary: available section types, exposed options, rendering rules, and design constraints
-- **Content** flows through Foundations without being coupled to presentation
-- **The Capability Boundary** protects coherence as sites evolve—creators control content and composition while the system preserves design integrity
+```
+my-project/
+├── site/                     # Content + configuration
+│   ├── pages/                # File-based routing
+│   │   └── home/
+│   │       ├── page.yml      # Page metadata
+│   │       └── 1-hero.md     # Section content
+│   ├── locales/              # i18n (mirrors pages/)
+│   │   └── es/
+│   └── public/               # Static assets
+│
+└── foundation/               # Your components
+    └── src/
+        └── components/
+            └── Hero/
+                └── index.jsx
+```
 
-## Open Source Packages
+### Content as Markdown
 
-| Package                                                | Description                                                   |
-| ------------------------------------------------------ | ------------------------------------------------------------- |
-| [`uniweb`](https://github.com/uniweb/cli)              | CLI for creating and building Uniweb projects                 |
-| [`@uniweb/build`](https://github.com/uniweb/build)     | Foundation build tooling (schema discovery, image processing) |
-| [`@uniweb/runtime`](https://github.com/uniweb/runtime) | Vite plugins and loader for sites                             |
+```markdown
+---
+component: Hero
+title: Welcome
+subtitle: Build something great
+ctaText: Get Started
+---
 
-## How It Works
+Optional body content here.
+```
 
-**For Foundation Developers:**
-Build a Foundation once—a React component library with metadata that defines what creators can do. Components receive content and params as props and generates purposeful renderings within your design system.
+The `component` field maps to your React component. Frontmatter becomes props. Body becomes structured content. No parsing code to write.
 
-**For Site Developers:**
-Use `@uniweb/runtime` to load Foundations dynamically via import maps, or bundle them statically for maximum performance.
+### Components as React
 
-**For Teams:**
-Foundations enforce design coherence architecturally. Multiple editors can publish safely because the Capability Boundary defines what's changeable and what's protected.
+```jsx
+export function Hero({ content }) {
+  const { title, subtitle, ctaText } = content;
 
-## The Uniweb App
+  return (
+    <section className="py-20 text-center">
+      <h1 className="text-4xl font-bold">{title}</h1>
+      <p className="text-xl text-gray-600">{subtitle}</p>
+      <button className="mt-8 px-6 py-3 bg-blue-600 text-white rounded">
+        {ctaText}
+      </button>
+    </section>
+  );
+}
+```
 
-These open source packages power the Foundation development workflow. For a complete publishing experience with visual editing, content management, and collaboration, see [uniweb.app](https://uniweb.app).
+Standard React. Standard Tailwind. No special APIs to learn.
 
-The Uniweb app is the "head" in this architecture—a real publishing surface where creators compose pages from Foundation components without touching code.
+## Why This Structure
+
+| Feature | What It Means |
+|---------|---------------|
+| **Two packages** | Clear separation—content deps vs component deps |
+| **File-based routing** | `pages/about/` → `/about` |
+| **Localization built-in** | `locales/es/about/` → Spanish version |
+| **Semantic content** | Markdown parsed into structured objects |
+| **Foundation-ready** | Components are already extractable/publishable |
+
+## Scaling Up
+
+The structure is designed to grow with you.
+
+### Multiple Sites
+
+```
+my-workspace/
+├── sites/
+│   ├── marketing/       # Main marketing site
+│   └── docs/            # Documentation site
+└── foundations/
+    ├── marketing/       # Marketing components
+    └── documentation/   # Docs components
+```
+
+### Publish Your Foundation
+
+Your `foundation/` folder is already a complete package. When ready:
+
+```bash
+cd foundation
+uniweb build
+npm publish
+```
+
+Other projects can use your components. Updates propagate automatically.
+
+### Visual Editing
+
+For teams with non-developers, [uniweb.app](https://uniweb.app) provides a visual editor that reads your Foundation and presents components as drag-and-drop building blocks. Same content format, no code changes needed.
+
+## Packages
+
+| Package | Description |
+|---------|-------------|
+| [`uniweb`](https://github.com/uniweb/cli) | CLI for creating and building projects |
+| [`@uniweb/build`](https://github.com/uniweb/build) | Foundation build tooling |
+| [`@uniweb/runtime`](https://github.com/uniweb/runtime) | Site runtime and Vite plugins |
+
+## The Bigger Picture
+
+Uniweb is a **Component Web Platform**—it manages how content becomes pages through components.
+
+- **Foundations** define the vocabulary: section types, options, constraints
+- **Sites** are pure content that flows through Foundations
+- **The Capability Boundary** protects design coherence as sites evolve
+
+Start with a single project. Graduate to multi-site architecture when you need it. Add visual editing when your team grows. The foundation you build today works at every scale.
 
 ## Documentation
 
-- [Foundation Development Guide](https://github.com/uniweb/cli/blob/main/docs/foundation-development.md)
-- [CLI Reference](https://github.com/uniweb/cli/blob/main/docs/cli-reference.md)
-- [Architecture Overview](https://github.com/uniweb/cli/blob/main/docs/architecture.md)
+- [Getting Started](docs/getting-started/understanding-uniweb.md)
+- [Foundation Development](docs/foundations/development.md)
+- [CLI Reference](docs/reference/cli.md)
 
 ## License
 
-Apache 2.0 - See [LICENSE](LICENSE) for details.
+Apache 2.0 — See [LICENSE](LICENSE) for details.
 
 ---
 
