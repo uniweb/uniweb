@@ -2,7 +2,7 @@
 
 **Structured Vite + React, ready to go.**
 
-Content/code separation, file-based routing, localization, semantic markdown—all wired up. No framework to learn. Foundation-ready from day one.
+Content/code separation, file-based routing, localization, semantic markdown—all wired up. No framework to learn. Ready for visual editing when your team grows.
 
 ---
 
@@ -90,7 +90,7 @@ Standard React. Standard Tailwind. Content is automatically parsed from markdown
 | **File-based routing** | `pages/about/` → `/about` |
 | **Localization built-in** | `locales/es/about/` → Spanish version |
 | **Semantic content** | Markdown parsed into structured objects |
-| **Foundation-ready** | Components are already extractable/publishable |
+| **Visual editor ready** | Integrates with [uniweb.app](https://uniweb.app) for non-developers |
 
 ## Scaling Up
 
