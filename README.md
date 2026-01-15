@@ -95,6 +95,7 @@ Standard React. Standard Tailwind. Content is automatically parsed from markdown
 | **Localization built-in** | `locales/es/about/` → Spanish version |
 | **Semantic content** | Markdown → structured objects, with configurable mappings |
 | **SPA, SSR, or SSG** | Client-side by default, with server rendering and static generation options |
+| **Dynamic or static** | Load Foundation at runtime (updates propagate) or bundle at build time—your choice |
 | **No lock-in** | Standard React components, leave anytime |
 
 ## Scaling Up
