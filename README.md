@@ -15,11 +15,11 @@ pnpm install
 pnpm dev
 ```
 
-You get a working Vite + React site with:
+You get a workspace with two packages:
 - **`site/`** — Content, pages, entry point
 - **`foundation/`** — Your React components
 
-**Why two packages?** Your components are immediately publishable—no extraction step when you want to reuse them across projects or share with others. For small projects, you'll barely notice the separation. For larger ones, you'll appreciate it.
+Content authors work in markdown. Component authors work in React. Neither can break the other's work, and component updates flow to every site using them. Start simple, scale to multi-site when needed.
 
 ## What You Get
 
