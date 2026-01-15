@@ -104,7 +104,22 @@ The structure is designed to grow with you.
 
 ### Multiple Sites
 
-When you need multiple sites or foundations, use the multi template:
+Every project is pre-configured for growth—no config changes needed. Add more sites or foundations alongside your existing structure:
+
+```bash
+mkdir -p sites/docs
+mkdir -p foundations/documentation
+```
+
+Or migrate to a multi-site structure:
+
+```bash
+mv site sites/marketing
+mv foundation foundations/marketing
+# Update package names and dependencies
+```
+
+Starting fresh? Use the multi template:
 
 ```bash
 npx uniweb create my-workspace --template multi
