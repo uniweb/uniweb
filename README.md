@@ -84,6 +84,8 @@ export function Hero({ content, params }) {
 
 Standard React. Standard Tailwind. Content is automatically parsed from markdown into structured objects—with sensible defaults and configurable mapping patterns when you need more control.
 
+**Note:** The `{ content, params }` interface is only for *exposed* components—the ones content creators select in markdown. Internal components (the majority of your codebase) use regular React props.
+
 ## Why This Structure
 
 | Feature | What It Means |
@@ -92,6 +94,7 @@ Standard React. Standard Tailwind. Content is automatically parsed from markdown
 | **File-based routing** | `pages/about/` → `/about` |
 | **Localization built-in** | `locales/es/about/` → Spanish version |
 | **Semantic content** | Markdown → structured objects, with configurable mappings |
+| **SPA, SSR, or SSG** | Client-side by default, with server rendering and static generation options |
 | **No lock-in** | Standard React components, leave anytime |
 
 ## Scaling Up
