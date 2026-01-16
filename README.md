@@ -177,6 +177,10 @@ Full documentation at **[docs.uniweb.io](https://docs.uniweb.io)**:
 - Component Development — props, content mapping, presets
 - Deployment — Vercel, static hosting, SSR options
 
+## Blog
+
+Articles on the architecture: [blog](./blog/)
+
 ## License
 
 Apache 2.0 — See [LICENSE](LICENSE) for details.
