@@ -37,7 +37,7 @@ The consumer is a developer. They write code, manage imports, and deploy applica
 
 ```markdown
 ---
-component: HeroSection
+type: HeroSection
 layout: centered
 background: dark
 ---
@@ -72,7 +72,7 @@ Markdown files with YAML frontmatter that specify _which_ component to use and _
 
 ```markdown
 ---
-component: HeroSection
+type: HeroSection
 layout: centered
 background: dark
 ---
@@ -136,7 +136,7 @@ When you expose a component in your Foundation, you're not creating a JavaScript
 
 ```markdown
 ---
-component: HeroSection
+type: HeroSection
 layout: centered
 background: dark
 ---

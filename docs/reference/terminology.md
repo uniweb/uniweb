@@ -80,7 +80,7 @@ This reference clarifies how Uniweb Framework uses key terms, many of which have
 
 ```markdown
 ---
-component: HeroSection
+type: HeroSection
 layout: centered
 ---
 

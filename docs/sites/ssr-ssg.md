@@ -70,7 +70,7 @@ description: Welcome to Uniweb
 
 ```markdown
 ---
-component: Hero
+type: Hero
 theme: dark
 ---
 
@@ -89,7 +89,7 @@ The content parser supports YAML arrays for components like Features:
 
 ```markdown
 ---
-component: Features
+type: Features
 title: Why Vite + ESM?
 features:
   - title: Native ES Modules
@@ -284,7 +284,7 @@ description: Learn more about our company
 # app/content/pages/about/1-hero.md
 
 ---
-component: Hero
+type: Hero
 ---
 
 # About Us

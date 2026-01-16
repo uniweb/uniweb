@@ -73,7 +73,7 @@ Then add your content:
 # site/pages/about/1-intro.md
 
 ---
-component: Hero
+type: Hero
 ---
 
 # About Us
@@ -89,7 +89,7 @@ Each markdown file is a **section** on the page. Here's a typical section:
 
 ```markdown
 ---
-component: Hero
+type: Hero
 theme: dark
 ---
 
@@ -158,7 +158,7 @@ To use a component, specify it in the frontmatter:
 
 ```yaml
 ---
-component: Features
+type: Features
 columns: 3
 ---
 ```
@@ -169,7 +169,7 @@ Most components have options you can configure:
 
 ```yaml
 ---
-component: TeamGrid
+type: TeamGrid
 layout: cards
 columns: 3
 showRole: true
@@ -182,7 +182,7 @@ Many components offer presets—pre-configured sets of options:
 
 ```yaml
 ---
-component: Hero
+type: Hero
 preset: centered-dark
 ---
 ```
@@ -270,7 +270,7 @@ When translating, you only need to include the content—not the frontmatter:
 
 ```markdown
 ---
-component: TeamGrid
+type: TeamGrid
 columns: 3
 ---
 

@@ -123,7 +123,7 @@ Parameters come from the front matter in markdown files:
 
 ```markdown
 ---
-component: HeroSection
+type: HeroSection
 layout: centered
 theme: dark
 showButton: true
