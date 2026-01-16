@@ -1,6 +1,6 @@
-# Choosing Uniweb Framework for Your Next Project
+# Choosing Uniweb for Your Next Project
 
-You're starting a new project. Next.js? Vite? Something else? There's another option worth considering: Uniweb Framework.
+You're starting a new project. Next.js? Vite? Something else? There's another option worth considering: Uniweb.
 
 But not necessarily for the reason you might think.
 
@@ -8,7 +8,7 @@ But not necessarily for the reason you might think.
 
 Most framework decisions come down to: "What features do I need?" SSR, routing, build optimization, whatever.
 
-Uniweb Framework is different. The choice is really: "Do I want to write infrastructure code, or focus on components?"
+Uniweb is different. The choice is really: "Do I want to write infrastructure code, or focus on components?"
 
 The framework's runtime handles routing with React Router, preprocesses content, fetches dynamic data before rendering, manages localization. Not "provides tools for these"—actually does them. You build components that render. The runtime handles everything else.
 
@@ -56,7 +56,7 @@ This is real work you're not writing. Every project needs it. Few projects need 
 
 ## The Real Question
 
-It's not "what features does Uniweb Framework have?" It's "does the architecture match how I work?"
+It's not "what features does Uniweb have?" It's "does the architecture match how I work?"
 
 If you naturally separate content from code, if you build content-heavy sites, if you want infrastructure handled so you can focus on components—try it.
 
