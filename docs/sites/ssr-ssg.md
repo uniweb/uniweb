@@ -1,314 +1,181 @@
-# SSR/SSG Guide
+# Static Site Generation (SSG)
 
-This guide explains how to use Server-Side Rendering (SSR) and Static Site Generation (SSG) in the Uniweb framework using React Router 7.
+Uniweb supports Static Site Generation (SSG) - pre-rendering your pages to static HTML at build time. This provides faster initial page loads and better SEO while maintaining full React interactivity.
 
 ## Overview
 
-The `site-ssr` package provides:
+| Mode | Description | Use Case |
+|------|-------------|----------|
+| **SPA** (default) | Single-page app, renders in browser | Admin panels, apps, draft previews |
+| **SSG** | Pre-rendered static HTML + hydration | Production sites, SEO-critical pages |
 
-- **SSR (Server-Side Rendering)**: Pages are rendered on the server at request time. Ideal for dynamic content, previews, and draft pages.
-- **SSG (Static Site Generation)**: Pages are pre-rendered at build time to static HTML. Ideal for production sites with content that doesn't change frequently.
-
-Both modes use the same codebase and components, with React hydration enabling client-side interactivity.
-
-## Architecture
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        Request Flow                              │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│   Request → Route Loader → Content Parser → Page Renderer        │
-│                              │                    │              │
-│                              ▼                    ▼              │
-│                         YAML/Markdown      Foundation            │
-│                         (content/)         Components            │
-│                              │                    │              │
-│                              └────────┬──────────┘              │
-│                                       ▼                          │
-│                              Server-Rendered HTML                │
-│                                       │                          │
-│                                       ▼                          │
-│                              Client Hydration                    │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-## Project Structure
-
-```
-packages/site-ssr/
-├── app/
-│   ├── content/
-│   │   └── pages/
-│   │       └── home/
-│   │           ├── page.yml          # Page metadata
-│   │           ├── 1-hero.md         # Section content
-│   │           └── 2-features.md     # Section content
-│   ├── lib/
-│   │   ├── content.server.ts         # Content loader
-│   │   └── renderer.tsx              # Page renderer
-│   ├── routes/
-│   │   └── page.tsx                  # Catch-all route
-│   ├── routes.ts                     # Route configuration
-│   └── root.tsx                      # App shell
-├── react-router.config.ts            # SSR/SSG configuration
-├── vite.config.ts                    # Vite configuration
-└── package.json
-```
-
-## Content Format
-
-### Page Metadata (`page.yml`)
-
-```yaml
-title: Home
-description: Welcome to Uniweb
-```
-
-### Section Content (`1-hero.md`)
-
-```markdown
----
-type: Hero
-theme: dark
----
-
-# Welcome to Uniweb
-
-Build modern websites with ease.
-
-[Learn More](#features)
-```
-
-Frontmatter specifies the component and configuration. The markdown body contains the content, which is semantically parsed (H1 → title, paragraphs → description, links → CTAs).
-
-### Arrays in YAML
-
-The content parser supports YAML arrays for components like Features:
-
-```markdown
----
-type: Features
-title: Why Vite + ESM?
-features:
-  - title: Native ES Modules
-    description: Standard browser modules
-  - title: Vite Dev Server
-    description: Lightning-fast HMR
----
-```
-
-## Configuration
-
-### React Router Config (`react-router.config.ts`)
-
-```typescript
-import type { Config } from "@react-router/dev/config";
-import { readdir } from "node:fs/promises";
-import { join } from "node:path";
-
-export default {
-  ssr: true,
-  appDirectory: "app",
-  buildDirectory: "build",
-
-  async prerender() {
-    const pagesDir = join(process.cwd(), "app", "content", "pages");
-    const entries = await readdir(pagesDir, { withFileTypes: true });
-
-    return entries
-      .filter((e) => e.isDirectory())
-      .map((e) => (e.name === "home" ? "/" : `/${e.name}`));
-  },
-} satisfies Config;
-```
-
-### Vite Config (`vite.config.ts`)
-
-```typescript
-import { reactRouter } from "@react-router/dev/vite";
-import { defineConfig } from "vite";
-import tsconfigPaths from "vite-tsconfig-paths";
-
-export default defineConfig({
-  plugins: [reactRouter(), tsconfigPaths()],
-  server: {
-    port: 3002,
-  },
-  optimizeDeps: {
-    include: ["foundation-example"],
-  },
-});
-```
-
-## Usage
-
-### Development (SSR Mode)
+## Quick Start
 
 ```bash
-cd packages/site-ssr
-pnpm dev
-```
-
-The dev server renders pages on the server at request time, providing:
-
-- Hot Module Replacement (HMR)
-- Instant feedback on content changes
-- Full SSR with hydration
-
-### Production Build (SSG Mode)
-
-```bash
-cd packages/site-ssr
+# Standard build (SPA)
+cd site
 pnpm build
+
+# Build with pre-rendering (SSG)
+uniweb build --prerender
 ```
 
-This pre-renders all pages defined in `prerender()` to static HTML files:
+## How It Works
+
+### Standard Build (SPA)
 
 ```
-build/
-├── client/
-│   ├── index.html          # Pre-rendered home page
-│   ├── about/index.html    # Pre-rendered about page (if exists)
-│   └── assets/             # JavaScript, CSS bundles
-└── server/
-    └── index.js            # Server bundle (for SSR fallback)
+Request → index.html (shell) → JavaScript loads → React renders page
 ```
 
-### Serving the Built Site
+The browser receives an empty HTML shell, then JavaScript renders the content. Search engines may not see the full content.
 
-```bash
-# Serve with SSR fallback for non-prerendered routes
-pnpm start
+### SSG Build
 
-# Or serve static files only (no SSR)
-npx serve build/client
+```
+Build time: Each page → React renderToString() → Static HTML file
+
+Request → Pre-rendered HTML (full content) → JavaScript hydrates → React takes over
 ```
 
-## Route Configuration
+Users see content immediately. Search engines see the full page. React then "hydrates" the HTML to enable interactivity.
 
-The `routes.ts` file defines a single catch-all route:
+## Output Structure
 
-```typescript
-import { type RouteConfig, route } from "@react-router/dev/routes";
-
-export default [route("*?", "routes/page.tsx")] satisfies RouteConfig;
+**Standard Build:**
+```
+dist/
+├── index.html          # Empty shell for all routes
+├── site-content.json   # Page data loaded by JS
+└── assets/
+    └── *.js, *.css
 ```
 
-The `*?` pattern matches:
-
-- `/` (home)
-- `/about`
-- `/blog/post-1`
-- Any other path
-
-## Loader Pattern
-
-The page route uses a loader to fetch content:
-
-```typescript
-// routes/page.tsx
-import { loadPageContent } from "~/lib/content.server";
-import { PageRenderer } from "~/lib/renderer";
-import type { Route } from "./+types/page";
-
-export async function loader({ request }: Route.LoaderArgs) {
-  const url = new URL(request.url);
-  const path = url.pathname === "/" ? "/home" : url.pathname;
-  const pageName = path.slice(1);
-
-  const content = await loadPageContent(pageName);
-
-  if (!content) {
-    throw new Response("Page not found", { status: 404 });
-  }
-
-  return { page: content };
-}
-
-export default function Page({ loaderData }: Route.ComponentProps) {
-  return <PageRenderer page={loaderData.page} />;
-}
+**SSG Build:**
+```
+dist/
+├── index.html          # Pre-rendered home page
+├── about/
+│   └── index.html      # Pre-rendered /about
+├── pricing/
+│   └── index.html      # Pre-rendered /pricing
+├── site-content.json   # Still included for hydration
+└── assets/
+    └── *.js, *.css     # Still included for hydration
 ```
 
-## Page Renderer
+## What Gets Pre-rendered
 
-The renderer maps sections to foundation components:
+Each page in your `pages/` directory becomes a static HTML file:
 
-```typescript
-// lib/renderer.tsx
-import * as foundation from "foundation-example";
+| Page Directory | Route | Output File |
+|---------------|-------|-------------|
+| `pages/home/` | `/` | `dist/index.html` |
+| `pages/about/` | `/about` | `dist/about/index.html` |
+| `pages/pricing/` | `/pricing` | `dist/pricing/index.html` |
+| `pages/blog/intro/` | `/blog/intro` | `dist/blog/intro/index.html` |
 
-function SectionRenderer({ section }: { section: PageSection }) {
-  const Component = foundation.getComponent(section.component);
+## HTML Enhancements
 
-  if (!Component) {
-    return <div>Unknown component: {section.component}</div>;
-  }
+Pre-rendered pages include:
 
-  const content = { ...section.params, _body: section.content };
-  return <Component content={content} />;
-}
+1. **Full HTML content** - All components rendered to markup
+2. **Page title** - From `page.yml` `title` field
+3. **Meta description** - From `page.yml` `description` field
+4. **Hydration data** - `__SITE_CONTENT__` script tag for React
 
-export function PageRenderer({ page }: PageRendererProps) {
-  return (
+Example pre-rendered HTML:
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>About Us</title>
+  <meta name="description" content="Learn more about our company">
+  <script id="__SITE_CONTENT__" type="application/json">
+    {"pages":[...],"config":{...}}
+  </script>
+  <script type="module" src="/assets/index.js"></script>
+</head>
+<body>
+  <div id="root">
     <main>
-      {page.sections.map((section, index) => (
-        <SectionRenderer key={section.id || index} section={section} />
-      ))}
+      <div id="Section1" class="context__dark">
+        <section class="hero">
+          <h1>About Us</h1>
+          <p>We build amazing things.</p>
+        </section>
+      </div>
     </main>
-  );
-}
+  </div>
+</body>
+</html>
 ```
 
-## Adding New Pages
-
-1. Create a new directory in `app/content/pages/`:
+## CLI Options
 
 ```bash
-mkdir app/content/pages/about
+uniweb build --prerender [options]
 ```
 
-2. Add page metadata:
+| Option | Description |
+|--------|-------------|
+| `--prerender` | Enable SSG pre-rendering |
+| `--foundation-dir <path>` | Custom foundation path (default: `../foundation`) |
 
-```yaml
-# app/content/pages/about/page.yml
-title: About Us
-description: Learn more about our company
+## When to Use SSG
+
+**Use SSG when:**
+- SEO matters (marketing sites, blogs, landing pages)
+- Fast initial page load is important
+- Content doesn't change per-user
+- You want to deploy to static hosting (Vercel, Netlify, GitHub Pages)
+
+**Use SPA when:**
+- Building admin panels or dashboards
+- Content is user-specific
+- You need draft/preview functionality
+- Pages have real-time data
+
+## Hydration
+
+After the pre-rendered HTML loads, React "hydrates" the page:
+
+1. Browser receives pre-rendered HTML (content visible immediately)
+2. JavaScript bundle loads
+3. React attaches event handlers to existing HTML
+4. Page becomes fully interactive
+
+This gives you the best of both worlds: fast initial render + full React functionality.
+
+## Deployment
+
+Pre-rendered sites work with any static hosting:
+
+```bash
+# Build with SSG
+uniweb build --prerender
+
+# Deploy dist/ folder to:
+# - Vercel
+# - Netlify
+# - GitHub Pages
+# - AWS S3 + CloudFront
+# - Any static file server
 ```
 
-3. Add section content:
+## Limitations
 
-```markdown
-# app/content/pages/about/1-hero.md
+- **Build-time only** - Content is rendered at build time, not request time
+- **No per-request data** - All users see the same pre-rendered content
+- **Rebuild for changes** - Content changes require a new build
 
----
-type: Hero
----
+For dynamic content that changes per-request, consider keeping those routes as SPA while pre-rendering static pages.
 
-# About Us
+## Future: Server-Side Rendering (SSR)
 
-Our story and mission.
-```
+SSR (rendering at request time) is planned for future releases. This will enable:
+- Per-request dynamic content
+- Draft/preview modes
+- Personalized pages
 
-4. The page is automatically available at `/about`
-
-## SSR vs SSG Decision Guide
-
-| Use SSR When                   | Use SSG When                   |
-| ------------------------------ | ------------------------------ |
-| Content changes frequently     | Content is mostly static       |
-| Personalized content needed    | Same content for all users     |
-| Draft/preview functionality    | Production published sites     |
-| Real-time data required        | Performance is critical        |
-
-## Hybrid Approach
-
-React Router 7 supports a hybrid approach:
-
-- Pre-render known static pages with `prerender()`
-- Fall back to SSR for dynamic or new pages
-- The server bundle handles routes not pre-rendered
-
-This gives the best of both worlds: fast static pages where possible, with dynamic SSR as a fallback.
+SSG covers most production use cases. SSR will be added when the need arises.

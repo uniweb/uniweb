@@ -9,7 +9,7 @@ The Uniweb CLI helps you create and build Uniweb projects.
 npx uniweb <command>
 
 # Or install globally
-npm install -g @uniweb/cli
+npm install -g uniweb
 uniweb <command>
 ```
 
@@ -27,7 +27,7 @@ uniweb create [project-name] [options]
 
 | Option | Description |
 |--------|-------------|
-| `--template <type>` | Project template: `workspace`, `site`, or `foundation` |
+| `--template <type>` | Project template (see Templates below) |
 
 **Examples:**
 
@@ -38,19 +38,21 @@ uniweb create
 # Create with specific name
 uniweb create my-project
 
-# Create specific template
-uniweb create my-site --template site
-uniweb create my-foundation --template foundation
-uniweb create my-workspace --template workspace
+# Create with specific template
+uniweb create my-project --template single
+uniweb create my-project --template marketing
+uniweb create my-project --template github:myorg/template
 ```
 
 **Templates:**
 
 | Template | Description |
 |----------|-------------|
-| `workspace` | Monorepo with site + foundation for co-development |
-| `site` | Standalone site using an existing foundation |
-| `foundation` | Standalone foundation (component library) |
+| `single` | One site + one foundation in `site/` and `foundation/` (default) |
+| `multi` | Multiple sites and foundations in `sites/*` and `foundations/*` |
+| `marketing` | Official marketing template with Hero, Features, Pricing, etc. |
+| `@scope/name` | Install template from npm package |
+| `github:user/repo` | Install template from GitHub repository |
 
 ### `build`
 
@@ -65,6 +67,8 @@ uniweb build [options]
 | Option | Description |
 |--------|-------------|
 | `--target <type>` | Build target: `foundation` or `site` (auto-detected if not specified) |
+| `--prerender` | Pre-render pages to static HTML (SSG) - site builds only |
+| `--foundation-dir <path>` | Path to foundation directory (for prerendering) |
 
 **Examples:**
 
@@ -77,6 +81,12 @@ uniweb build --target foundation
 
 # Explicitly build as site
 uniweb build --target site
+
+# Build site with SSG pre-rendering
+uniweb build --prerender
+
+# SSG with custom foundation path
+uniweb build --prerender --foundation-dir ../my-foundation
 ```
 
 **Foundation Build Process:**
@@ -93,11 +103,35 @@ uniweb build --target site
 dist/
 ├── foundation.js       # Bundled components
 ├── foundation.js.map   # Source map
-├── schema.json         # Component metadata for editor
+├── schema.json         # Component metadata
 └── assets/
     ├── style.css       # Compiled CSS
     └── [Component]/    # Preview images
         └── [preset].webp
+```
+
+**Site Build Output (Standard):**
+
+```
+dist/
+├── index.html          # SPA shell
+├── site-content.json   # Page content
+└── assets/
+    └── *.js, *.css     # Bundled app
+```
+
+**Site Build Output (with `--prerender`):**
+
+```
+dist/
+├── index.html          # Pre-rendered home page
+├── about/
+│   └── index.html      # Pre-rendered about page
+├── contact/
+│   └── index.html      # Pre-rendered contact page
+├── site-content.json   # Page content (for hydration)
+└── assets/
+    └── *.js, *.css     # Bundled app (for hydration)
 ```
 
 ### `--help`
@@ -123,6 +157,7 @@ The CLI auto-detects project type based on directory structure:
 | Variable | Description |
 |----------|-------------|
 | `NODE_ENV` | Set to `production` for optimized builds |
+| `DEBUG` | Set to show verbose error output |
 
 ## Generated Files
 

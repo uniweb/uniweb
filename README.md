@@ -154,7 +154,7 @@ You own your foundations and license them to sites. When you release updates, li
 |---------|-------------|
 | [`uniweb`](https://github.com/uniweb/cli) | CLI for creating and building projects |
 | [`@uniweb/build`](https://github.com/uniweb/build) | Foundation build tooling |
-| [`@uniweb/runtime`](https://github.com/uniweb/runtime) | Site runtime and Vite plugins |
+| [`@uniweb/runtime`](https://github.com/uniweb/runtime) | Foundation loader and orchestrator |
 
 ## The Bigger Picture
 
@@ -164,7 +164,7 @@ The structure you start with scales without rewrites:
 2. **Multi-site** — One Foundation powers multiple sites. Release it once, updates propagate automatically—no rebuilds needed.
 3. **Full platform** — [uniweb.app](https://uniweb.app) adds visual editing, live content management, structured data, and team collaboration. Your Foundation plugs in and its components become native to the editor. Content creators work on real pages instantly.
 
-Start with local markdown files deployed to Vercel. Grow to a collaborative content platform when you need it. Everything is wired from the start; you just connect it.
+Start with local markdown files deployed anywhere. Grow to a collaborative content platform when you need it. Everything is wired from the start; you just connect it.
 
 The separation between content (`site/`) and components (`foundation/`) is what makes this possible. Content authors can't break components; component updates flow to all sites using them.
 
