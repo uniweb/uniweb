@@ -169,13 +169,8 @@ uniweb build --prerender
 - **No per-request data** - All users see the same pre-rendered content
 - **Rebuild for changes** - Content changes require a new build
 
-For dynamic content that changes per-request, consider keeping those routes as SPA while pre-rendering static pages.
+For dynamic content that changes per-request, draft previews, or personalized pages, use [uniweb.app](https://uniweb.app) which provides server-side rendering and live content management.
 
-## Future: Server-Side Rendering (SSR)
+## Dynamic Routes
 
-SSR (rendering at request time) is planned for future releases. This will enable:
-- Per-request dynamic content
-- Draft/preview modes
-- Personalized pages
-
-SSG covers most production use cases. SSR will be added when the need arises.
+SSG supports dynamic routes (like `/blog/[slug]`) by fetching data sources at build time. See [Dynamic Routes](./dynamic-routes.md) for details on generating pages from JSON, YAML, or API data sources.
