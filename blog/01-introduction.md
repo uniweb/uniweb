@@ -107,7 +107,7 @@ pnpm install
 pnpm dev
 ```
 
-You'll get a Foundation with example components and a demo site. See how it works. Modify components. Check the docs at [docs.framework.uniweb.app](https://docs.framework.uniweb.app).
+You'll get a Foundation with example components and a demo site. See how it works. Modify components. Check the docs at [docs.uniweb.io](https://docs.uniweb.io).
 
 ## Publishing Your Foundation
 
@@ -145,4 +145,4 @@ Right now, we're just happy to share what we made and see what people build with
 
 If you've wanted to build component frameworks that others can build sites with, or clean separation between component code and content, or updates that propagate instantly across multiple sites—try it.
 
-We'd love to hear what you think. [Docs](https://docs.framework.uniweb.app) at the framework's site, [code](https://github.com/uniwebcms/framework) on GitHub. We're early, so you're early. Build something. Tell us what's confusing or doesn't work. Help us figure out what this becomes.
+We'd love to hear what you think. [Docs](https://docs.uniweb.io) at the framework's site, [code](https://github.com/uniweb/framework) on GitHub. We're early, so you're early. Build something. Tell us what's confusing or doesn't work. Help us figure out what this becomes.

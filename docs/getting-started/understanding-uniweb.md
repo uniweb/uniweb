@@ -275,13 +275,13 @@ Now that you understand the architectural concepts, here's where to go:
 **Start building:**
 
 - **[Uniweb for Developers](../developers-guide.md)** — Technical guide for building Foundations
-- **[Documentation](https://docs.framework.uniweb.app)** — Complete API reference and tutorials
-- **[Examples](https://github.com/uniwebcms/examples)** — Sample Foundations and component patterns
+- **[Documentation](https://docs.uniweb.io)** — Complete API reference and tutorials
+- **[Examples](https://github.com/uniweb/examples)** — Sample Foundations and component patterns
 
 **Explore the ecosystem:**
 
 - **[Uniweb App](https://uniweb.app)** — Visual content editor and hosting platform
-- **[Community Interfaces](https://github.com/uniwebcms/interfaces)** — Standard component specifications
-- **[Framework Website](https://framework.uniweb.app)** — Guides and comprehensive resources
+- **[Community Interfaces](https://github.com/uniweb/interfaces)** — Standard component specifications
+- **[Framework Website](https://uniweb.io)** — Guides and comprehensive resources
 
 The best way to internalize these concepts is to create a project and experiment. Start simple, add complexity as you need it, and let the architecture guide your decisions.
