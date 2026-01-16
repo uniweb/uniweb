@@ -85,7 +85,7 @@ pnpm dev
 
 You'll get a Foundation with example components and a demo site. See what the runtime handles. See what you actually build. Check if it matches your workflow.
 
-Documentation at [docs.uniweb.io](https://docs.uniweb.io). Code on [GitHub](https://github.com/uniweb/framework).
+Documentation at [docs.uniweb.io](https://docs.uniweb.io). Code on [GitHub](https://github.com/uniweb/cli).
 
 ## The Decision
 
