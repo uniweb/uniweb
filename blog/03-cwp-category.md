@@ -139,11 +139,11 @@ The platform core stays stable and agnostic, while a purpose-built **Foundation*
 
 When component names and parameters match the domain, something important happens: the editor stops feeling like a generic CMS. It becomes a purpose-built publishing surface for that kind of site—without hard-coding the platform into a single use case.
 
-This is the **Native Effect**. Load a Marketing Foundation, and Uniweb feels like a marketing platform. Load a Documentation Foundation, and it feels like a docs platform. The underlying system is the same; the vocabulary adapts.
+This is the **Native Effect**. Load a Marketing Foundation, and the platform feels like a marketing tool. Load a Documentation Foundation, and it feels like a docs platform. The underlying system is the same; the vocabulary adapts.
 
 ---
 
-## "Headless with a head" (a helpful technical shortcut)
+## "Headless with a head"
 
 If you've lived in the headless world, here's a fast mapping:
 
@@ -179,7 +179,7 @@ Once you do that, you get a website that is:
 
 ---
 
-## The category we're building
+## The category and the architecture
 
 We're calling this category **Component Web Platform** because it describes what's truly new:
 
@@ -189,6 +189,10 @@ But a platform that **bridges content and components into publishing**.
 
 > **Manage how content becomes pages through components.**
 
-That's the job.
-That's the system.
-That's the category.
+That's the job. That's the system. That's the category.
+
+But a category needs more than a name—it needs a clear architectural foundation. How exactly should content bind to components? What makes a Foundation portable? How do you ensure that the constraints are enforced by the system, not just by policy?
+
+These questions led us to define **Component Content Architecture (CCA)**—an open architectural pattern that specifies how the binding between content and components should work. CCA is the technical blueprint; Component Web Platform is the category of products you can build on it.
+
+If you're evaluating this category as a buyer or strategist, this article gives you the mental model. If you're an architect or developer who wants to understand the technical underpinnings—or who cares about portability and open standards—read [The Case for Component Content Architecture](/cca).
