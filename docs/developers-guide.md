@@ -71,10 +71,14 @@ function HeroSection({ content, params, block }) {
   );
 }
 
-// Initialize block defaults for persistent state
-HeroSection.blockDefaults = {
+// Block configuration: state (dynamic) and context (static)
+HeroSection.block = {
   state: {
-    supportsOverlay: true,
+    // Dynamic state that can change at runtime
+  },
+  context: {
+    // Static properties for cross-block communication
+    allowTranslucentTop: true,
   },
 };
 
@@ -154,40 +158,157 @@ function HeroSection({ content, params, block }) {
 
 ### Working with the Block Object
 
-The `block` object provides runtime context and methods:
+The `block` object provides runtime context, state management, and cross-block communication:
 
 ```jsx
+import { useState } from 'react';
+
 function InteractiveComponent({ content, params, block }) {
-  const [count, setCount] = useState(block.getState("count") || 0);
+  // Connect block state to React state using the bridge pattern
+  const [state, setState] = block.useBlockState(useState);
 
   const increment = () => {
-    const newCount = count + 1;
-    setCount(newCount);
-    block.setState("count", newCount);
+    setState({
+      ...state,
+      count: (state.count || 0) + 1
+    });
   };
-
-  const parent = block.getParent();
-  const children = block.getChildBlocks();
 
   return (
     <div>
       <h2>{content.main.title}</h2>
-      <p>Count: {count}</p>
+      <p>Count: {state.count || 0}</p>
       <button onClick={increment}>Increment</button>
     </div>
   );
 }
+
+// Declare initial state for blocks using this component
+InteractiveComponent.block = {
+  state: {
+    count: 0
+  }
+};
 ```
 
-Common block methods:
+**Block Properties:**
 
 - `block.id` - Unique identifier for this block instance
-- `block.type` - Component name
-- `block.getState(key)` - Get persistent state value
-- `block.setState(key, value)` - Set persistent state value
-- `block.getParent()` - Get parent block (if child)
-- `block.getChildBlocks()` - Get array of child blocks (if parent)
-- `block.input` - Dynamic data fetched from APIs
+- `block.type` - Component type (matches frontmatter `type:`)
+- `block.themeName` - Theme setting (e.g., 'light', 'dark')
+- `block.state` - Dynamic state (from `Component.block.state`)
+- `block.context` - Static context (from `Component.block.context`)
+- `block.childBlocks` - Array of child Block instances
+- `block.input` - Dynamic data (from data sources)
+- `block.page` - Reference to the parent Page
+- `block.website` - Reference to the Website
+
+**Block Methods:**
+
+- `block.useBlockState(useState)` - Bridge pattern for React state sync (see below)
+- `block.getChildBlockRenderer()` - Get the ChildBlocks component for rendering children
+- `block.getIndex()` - Get this block's position in the page
+- `block.getBlockInfo()` - Get `{ type, theme, state, context }` for cross-block communication
+- `block.getNextBlockInfo()` - Get the next block's info
+- `block.getPrevBlockInfo()` - Get the previous block's info
+
+### Block State and the Bridge Pattern
+
+Block state persists across renders and even page navigations, making it more powerful than standard React state for certain use cases.
+
+The `useBlockState` method uses a "bridge pattern" that connects vanilla JavaScript state to React:
+
+```jsx
+function Accordion({ content, params, block }) {
+  // Pass useState to the block - it manages the subscription
+  const [state, setState] = block.useBlockState(useState);
+
+  const toggleItem = (index) => {
+    setState({
+      ...state,
+      openItem: state.openItem === index ? null : index
+    });
+  };
+
+  return (
+    <div className="accordion">
+      {content.items.map((item, index) => (
+        <div key={index} className={state.openItem === index ? 'open' : ''}>
+          <button onClick={() => toggleItem(index)}>{item.title}</button>
+          {state.openItem === index && <div>{item.paragraphs[0]}</div>}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// Initial state declaration
+Accordion.block = {
+  state: { openItem: null }
+};
+```
+
+### Cross-Block Communication
+
+Components can read information from neighboring blocks, enabling adaptive behavior without content author involvement.
+
+Block info includes:
+- **`type`** - Component type (e.g., 'Hero', 'Features')
+- **`theme`** - Theme setting ('light', 'dark')
+- **`state`** - Dynamic state (can change at runtime)
+- **`context`** - Static context (properties inherent to the component type)
+
+**Common use case:** A NavBar that adapts based on the first content section:
+
+```jsx
+function NavBar({ content, params, block }) {
+  // Check what the first body section looks like
+  const firstBodyInfo = block.page.getFirstBodyBlockInfo();
+
+  // Or check the next block after this one
+  const nextBlockInfo = block.getNextBlockInfo();
+
+  // Use static context for component-type properties
+  const allowTranslucentTop = nextBlockInfo?.context?.allowTranslucentTop || false;
+
+  // Use theme for color adaptation
+  const isDarkTheme = nextBlockInfo?.theme === 'dark';
+
+  return (
+    <nav className={`
+      ${allowTranslucentTop ? 'absolute top-0 bg-transparent' : 'relative bg-white'}
+      ${isDarkTheme ? 'text-white' : 'text-gray-900'}
+    `}>
+      {/* Navigation content */}
+    </nav>
+  );
+}
+```
+
+**Hero component declaring its context:**
+
+```jsx
+function Hero({ content, params, block }) {
+  return (
+    <section className="relative h-screen">
+      {/* Full-screen hero with background image */}
+    </section>
+  );
+}
+
+// Static context: properties that are always true for Hero components
+Hero.block = {
+  context: {
+    allowTranslucentTop: true  // Heroes always support translucent navbar overlay
+  }
+};
+```
+
+**Key distinction:**
+- **`context`** — Static properties per component type. "All Hero components allow translucent top."
+- **`state`** — Dynamic properties per block instance. "This specific accordion has item 2 open."
+
+This pattern allows sophisticated visual coordination between sections without requiring content authors to manually configure each page.
 
 ### Styling Components
 
@@ -314,27 +435,95 @@ Do not use these names in your parameter definitions:
 
 ## Advanced Patterns
 
-### Parent-Child Relationships
+### Parent-Child Relationships (Child Blocks)
+
+Content creators can nest sections in `page.yml`, and parent components can render these child blocks:
+
+```yaml
+# pages/about/page.yml
+sections:
+  - tabs           # Parent section
+    - overview     # Child of tabs
+    - features     # Child of tabs
+    - pricing      # Child of tabs
+```
+
+The parent component accesses children via `block.childBlocks` and renders them with `ChildBlocks`:
 
 ```jsx
+import { useState } from 'react';
+
 function Tabs({ content, params, block }) {
   const [activeTab, setActiveTab] = useState(0);
-  const childBlocks = block.getChildBlocks();
+
+  // Get the renderer component for child blocks
+  const ChildBlocks = block.getChildBlockRenderer();
+
+  // No children? Render fallback
+  if (!block.childBlocks?.length) {
+    return <div>{content.main.title}</div>;
+  }
 
   return (
     <div className="tabs">
+      {/* Tab navigation - read child block titles */}
       <div className="tab-buttons">
-        {childBlocks.map((child, index) => (
+        {block.childBlocks.map((childBlock, index) => (
           <button
             key={index}
             onClick={() => setActiveTab(index)}
-            className={activeTab === index ? "active" : ""}
+            className={activeTab === index ? 'active' : ''}
           >
-            {child.content.main.title}
+            {childBlock.main?.header?.title || `Tab ${index + 1}`}
           </button>
         ))}
       </div>
-      <div className="tab-content">{childBlocks[activeTab]?.render()}</div>
+
+      {/* Render only the active child block */}
+      <div className="tab-content">
+        <ChildBlocks
+          block={block}
+          childBlocks={[block.childBlocks[activeTab]]}
+        />
+      </div>
+    </div>
+  );
+}
+```
+
+**Other composition patterns:**
+
+```jsx
+// Two-column layout
+function TwoColumn({ content, params, block }) {
+  const ChildBlocks = block.getChildBlockRenderer();
+  const [left, right] = block.childBlocks || [];
+
+  return (
+    <div className="grid grid-cols-2 gap-8">
+      <div>{left && <ChildBlocks block={block} childBlocks={[left]} />}</div>
+      <div>{right && <ChildBlocks block={block} childBlocks={[right]} />}</div>
+    </div>
+  );
+}
+
+// Accordion - render all children, control visibility
+function Accordion({ content, params, block }) {
+  const [state, setState] = block.useBlockState(useState);
+  const ChildBlocks = block.getChildBlockRenderer();
+
+  return (
+    <div className="accordion">
+      {block.childBlocks?.map((childBlock, index) => (
+        <div key={index}>
+          <button onClick={() => setState({ openIndex: index })}>
+            {childBlock.main?.header?.title}
+          </button>
+          {state.openIndex === index && (
+            <ChildBlocks block={block} childBlocks={[childBlock]} />
+          )}
+        </div>
+      ))}
     </div>
   );
 }
