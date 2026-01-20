@@ -126,14 +126,14 @@ function MyComponent({ content, params, block }) {
 
 ### Exposed Component
 
-**In Uniweb:** A component that content creators can reference in markdown frontmatter. These components sit at the boundary between content and code, requiring a schema file (`component.config.js`) that defines their interface.
+**In Uniweb:** A component that content creators can reference in markdown frontmatter. These components sit at the boundary between content and code, requiring a `meta.js` file that defines their interface.
 
 **Also called:** User-facing component, boundary component
 
 **Key characteristics:**
 
 - Defined in Foundation's component directory
-- Has a `component.config.js` schema file
+- Has a `meta.js` file
 - Follows the `{ content, params, block }` interface
 - Visible to content creators and visual editors
 
@@ -166,7 +166,7 @@ function MyComponent({ content, params, block }) {
 
 ### Schema
 
-**In Uniweb:** Defines the interface of a component or content structure. Component schemas (`component.config.js`) specify parameters, presets, and metadata. Content schemas (for JSON blocks) define data structure and validation.
+**In Uniweb:** Defines the interface of a component or content structure. Component schemas (`meta.js`) specify parameters, presets, and metadata. Content schemas (for JSON blocks) define data structure and validation.
 
 **Purpose:**
 

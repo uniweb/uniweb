@@ -26,7 +26,7 @@ The Framework supports two distinct types of components:
 
    - Components that content creators can select in markdown files
    - Follow the special `{ content, params, block }` interface
-   - Require schema files (`component.config.js`)
+   - Require a `meta.js` file
    - Act as the bridge between content and code
    - Can be composed through section hierarchy (parent-child relationships)
 
@@ -385,10 +385,10 @@ function StandardTeamCard({ name, role, bio, image }) {
 
 ## Component Configuration
 
-Each exposed component has a `component.config.js` file:
+Each exposed component has a `meta.js` file:
 
 ```js
-// components/HeroSection/component.config.js
+// components/HeroSection/meta.js
 export default {
   label: "Hero Section",
   description: "A full-width hero section with optional background image",
