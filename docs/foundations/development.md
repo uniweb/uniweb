@@ -21,9 +21,9 @@ my-foundation/
 ├── postcss.config.js
 ├── src/
 │   ├── meta.js                    # Foundation-level metadata
-│   ├── index.js                   # Manual entry (for dev)
-│   ├── entry-runtime.js           # Runtime entry (includes CSS)
+│   ├── runtime.js                 # (optional) Custom Layout, props
 │   ├── styles.css                 # Global styles (Tailwind)
+│   ├── _entry.generated.js        # Auto-generated entry point
 │   ├── icons/                     # Shared icons/assets
 │   │   └── arrow-right.svg
 │   └── components/

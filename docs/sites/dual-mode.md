@@ -34,15 +34,16 @@ We support both modes, letting developers choose based on their current task.
 ```
 foundation-example/
 ├── src/
-│   ├── index.js           # Main entry (no CSS import)
-│   ├── entry-runtime.js   # Build entry (includes CSS)
-│   ├── styles.css         # Tailwind source
+│   ├── styles.css              # Tailwind source
+│   ├── meta.js                 # Foundation metadata
+│   ├── runtime.js              # (optional) Custom Layout, props
+│   ├── _entry.generated.js     # Auto-generated entry point
 │   └── components/
 │       └── *.jsx
 ├── dist/
-│   ├── foundation.js      # Built bundle
+│   ├── foundation.js           # Built bundle
 │   └── assets/
-│       └── style.css      # Built CSS
+│       └── style.css           # Built CSS
 └── package.json
 ```
 
@@ -82,23 +83,19 @@ export function getComponent() {
 
 Then we can't import JS without also processing CSS through Vite's pipeline, which won't have the right Tailwind config.
 
-**Solution:** Separate entries:
+**Solution:** The entry point is auto-generated (`_entry.generated.js`) and includes CSS:
 
 ```js
-// src/index.js - JS only, no CSS
-export function getComponent() {
-  /* ... */
-}
+// src/_entry.generated.js - Auto-generated, includes CSS
+import './styles.css'
+import Hero from './components/Hero/index.jsx'
+// ... more components
 
-// src/entry-runtime.js - For bundled builds
-import "./styles.css";
-export * from "./index.js";
+export function getComponent(name) { /* ... */ }
+export function listComponents() { /* ... */ }
 ```
 
-Now:
-
-- Standard import: `import('foundation')` + `import('foundation/dist/styles')`
-- Runtime loading: Uses `entry-runtime.js` which bundles CSS
+The Vite plugin generates this file automatically based on discovered components (those with `meta.js`).
 
 ### CSS Handling
 
