@@ -8,7 +8,7 @@ For the last decade, web development has bifurcated. We have established standar
 
 Currently, the logic that binds "Content A" to "Component B" is either hard-coded in proprietary themes or glued together in custom frontend code. This creates fragility, vendor lock-in, and the inability to move publishing systems between environments.
 
-This paper introduces **Component Content Architecture (CCA)**: an open architectural pattern for modeling the binding between structured content and UI components. CCA is the technical foundation for a new category of publishing tools—what we call **Component Web Platforms**—that manage how content becomes pages through components.
+This paper introduces **Component Content Architecture (CCA)**: an open architectural pattern for modeling the binding between structured content and UI components. CCA is the technical foundation for a new category of publishing tools—**Component Content Systems**—that manage how content becomes pages through components.
 
 ---
 
@@ -95,7 +95,7 @@ Components receive structured, semantic content—headings, paragraphs, links, i
 
 This is the binding layer: the system manages the transformation from natural content to component-ready data. The Foundation defines the contract; content flows through it.
 
-This separation is what enables **domain adaptability**. A Marketing Foundation and a Documentation Foundation can run on the same CCA-compliant platform. Swap the Foundation, and the same content infrastructure serves a completely different publishing purpose.
+This separation is what enables **domain adaptability**. A Marketing Foundation and a Documentation Foundation can run on the same CCA-compliant system. Swap the Foundation, and the same content infrastructure serves a completely different publishing purpose.
 
 ---
 
@@ -124,33 +124,28 @@ This is why we say **"Code is Policy."** You don't hope the marketing team uses 
 The web would benefit from CCA becoming an open standard rather than a proprietary implementation detail. Here's why:
 
 **Portability**
-If your content and your Foundation both follow CCA conventions, you can move between platforms—or self-host—without rebuilding your site. Your content is data. Your components are code. The architecture is the contract that binds them.
+If your content and your Foundation both follow CCA conventions, you can move between implementations—or self-host—without rebuilding your site. Your content is data. Your components are code. The architecture is the contract that binds them.
 
 **Interoperability**
-Foundations built to CCA specs could work across multiple CCA-compliant runtimes. A Foundation developed for one platform could, in principle, run on another.
+Foundations built to CCA specs could work across multiple CCA-compliant runtimes. A Foundation developed for one system could, in principle, run on another.
 
 **Longevity**
-Content outlives platforms. When your publishing system is built on an open architecture, your investment in content and components survives vendor changes, technology shifts, and organizational pivots.
+Content outlives products. When your publishing system is built on an open architecture, your investment in content and components survives vendor changes, technology shifts, and organizational pivots.
 
 **Clarity**
 CCA gives teams a shared vocabulary for discussing the binding layer. Instead of ad-hoc solutions, you have a principled architecture that separates concerns cleanly.
 
 ---
 
-## 5. CCA and Component Web Platforms
+## 5. CCA and Component Content Systems
 
-CCA is an architecture. **Component Web Platform** is the category of products built on that architecture.
+CCA is an architecture. **Component Content System (CCS)** is the category of products built on that architecture.
 
-A Component Web Platform is any system that:
+A Component Content System is any implementation that manages the binding between content and components as a first-class concern, uses Foundations to define the publishing language, enforces the Capability Boundary architecturally, and enables domain adaptability through Foundation swapping.
 
-- Manages the binding between content and components as a first-class concern
-- Uses Foundations (or an equivalent concept) to define the publishing language
-- Enforces the Capability Boundary architecturally
-- Enables domain adaptability through Foundation swapping
+Some Component Content Systems are hosted platforms with visual editing and collaboration features. Others are CLI tools and build systems for developers working locally. A CCS could even be a desktop application that works entirely on the local filesystem. The architecture is the same; the deployment model varies.
 
-If you're trying to understand *what kind of system this is*—why it's different from a CMS, a page builder, or a headless backend—read [Introducing Component Web Platforms](/cwp). That article frames the category for buyers, strategists, and anyone evaluating the landscape.
-
-This paper is for architects and developers who want to understand *how it works*—and who care about building on open foundations rather than proprietary lock-in.
+For a full treatment of the category—what it is, why it exists, and how it differs from traditional CMS, headless, and builders—see [Introducing Component Content Systems](/ccs). This paper focuses on the architectural specification.
 
 ---
 
@@ -192,7 +187,7 @@ Host anywhere. Because CCA separates content from runtime, you deploy your Found
 
 **The Managed Platform (uniweb.app)**
 
-For teams that prioritize speed and collaboration over infrastructure management, Uniweb.app is the hosted implementation:
+For teams that prioritize speed and collaboration over infrastructure management, Uniweb.app is a hosted Component Content System:
 
 - **Instant Runtime**: Publish a Foundation, get a visual editing environment
 - **SaaS Convenience**: Zero config, instant previews, role-based access, global hosting
@@ -236,7 +231,7 @@ npx uniweb@latest create my-site --template marketing
 npx uniweb@latest create my-workspace --template multi
 ```
 
-- **Explore the category**: Read [Introducing Component Web Platforms](/cwp) to understand the bigger picture
+- **Explore the category**: Read [Introducing Component Content Systems](/ccs) to understand the bigger picture
 - **Read the docs**: Full documentation at [docs.uniweb.io](https://docs.uniweb.io)
 - **Use the platform**: Deploy to [uniweb.app](https://uniweb.app) for a managed experience
 - **View the source**: [github.com/uniweb](https://github.com/uniweb)
@@ -251,4 +246,4 @@ CCA proposes that the binding is not a detail to be solved ad-hoc in every proje
 
 Build on CCA, and you get portability, enforced design constraints, domain adaptability, and a clean separation between what creators control and what the system protects.
 
-That's the architecture. The products built on it—Component Web Platforms—are the future of publishing.
+That's the architecture. The systems built on it—Component Content Systems—are the future of publishing.

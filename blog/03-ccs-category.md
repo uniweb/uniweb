@@ -1,4 +1,4 @@
-# Introducing Component Web Platforms
+# Introducing Component Content Systems
 
 ## The content–component bridge for domain-adaptable publishing
 
@@ -19,9 +19,9 @@ So modern publishing needs a system that manages the relationship between **cont
 
 That's the category we're naming:
 
-## Component Web Platform
+## Component Content System
 
-A **Component Web Platform** is:
+A **Component Content System** is:
 
 > **The content–component bridge for domain-adaptable publishing.**
 
@@ -33,7 +33,7 @@ That sentence is the category.
 
 A traditional CMS mostly answers: _"Where is the content stored?"_
 
-A Component Web Platform answers a more important question: _"How does content become a real page—safely, consistently, and at scale?"_
+A Component Content System answers a more important question: _"How does content become a real page—safely, consistently, and at scale?"_
 
 ---
 
@@ -68,7 +68,7 @@ In **headless**, content is clean—but the component system lives "somewhere el
 
 In **builders**, components exist—but users can usually bypass them and manipulate layout directly. This freedom is the source of drift.
 
-A Component Web Platform explicitly manages the binding:
+A Component Content System explicitly manages the binding:
 
 > **This content is rendered through this component, with these options and constraints, in this order, with this theme.**
 
@@ -78,7 +78,7 @@ That binding is the real heart of publishing.
 
 ## The core idea: components as the publishing language
 
-A Component Web Platform changes what "editing" means.
+A Component Content System changes what "editing" means.
 
 Instead of:
 
@@ -120,7 +120,7 @@ A Capability Boundary is the hard line between what creators can change and what
 - Component behavior (interactions, responsive rules)
 - Structural constraints (what combinations are valid)
 
-This is why a Component Web Platform can scale without drift. Creators have genuine freedom inside components. The system stays protected outside them.
+This is why a Component Content System can scale without drift. Creators have genuine freedom inside components. The system stays protected outside them.
 
 ---
 
@@ -128,7 +128,7 @@ This is why a Component Web Platform can scale without drift. Creators have genu
 
 One of the most important implications of this category is **domain adaptability**.
 
-A Component Web Platform isn't pre-specialized for marketing sites or documentation or universities. It's **specialization-ready**.
+A Component Content System isn't pre-specialized for marketing sites or documentation or universities. It's **specialization-ready**.
 
 The platform core stays stable and agnostic, while a purpose-built **Foundation** (component system) supplies the domain vocabulary:
 
@@ -147,7 +147,7 @@ This is the **Native Effect**. Load a Marketing Foundation, and the platform fee
 
 If you've lived in the headless world, here's a fast mapping:
 
-Headless CMS gives you structured content APIs. A Component Web Platform gives you that **plus** the missing part:
+Headless CMS gives you structured content APIs. A Component Content System gives you that **plus** the missing part:
 
 - A component-driven publishing surface (the "head")
 - Where the editor experience is derived from your Foundation
@@ -161,7 +161,7 @@ Creators aren't filling out forms in the abstract. They're composing real pages 
 
 ## What this unlocks in practice
 
-A Component Web Platform is not "a CMS plus a page builder."
+A Component Content System is not "a CMS plus a page builder."
 
 It's a different model:
 
@@ -181,7 +181,7 @@ Once you do that, you get a website that is:
 
 ## The category and the architecture
 
-We're calling this category **Component Web Platform** because it describes what's truly new:
+We're calling this category **Component Content System** because it describes what's truly new:
 
 Not just content management.
 Not just a component library.
@@ -193,6 +193,6 @@ That's the job. That's the system. That's the category.
 
 But a category needs more than a name—it needs a clear architectural foundation. How exactly should content bind to components? What makes a Foundation portable? How do you ensure that the constraints are enforced by the system, not just by policy?
 
-These questions led us to define **Component Content Architecture (CCA)**—an open architectural pattern that specifies how the binding between content and components should work. CCA is the technical blueprint; Component Web Platform is the category of products you can build on it.
+These questions led us to define **Component Content Architecture (CCA)**—an open architectural pattern that specifies how the binding between content and components should work. CCA is the technical blueprint; Component Content System is the category of products you can build on it.
 
 If you're evaluating this category as a buyer or strategist, this article gives you the mental model. If you're an architect or developer who wants to understand the technical underpinnings—or who cares about portability and open standards—read [The Case for Component Content Architecture](/cca).

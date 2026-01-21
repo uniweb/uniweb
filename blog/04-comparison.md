@@ -1,8 +1,8 @@
-# Component Web Platform vs. Headless vs. Webflow vs. WordPress
+# Component Content System vs. Headless vs. Webflow vs. WordPress
 
 ## Building the same "Pricing page" four ways
 
-In the [previous post], we introduced a new category: **Component Web Platform**—the content–component bridge for domain-adaptable publishing.
+In the [previous post](/ccs), we introduced a new category: **Component Content System**—the content–component bridge for domain-adaptable publishing.
 
 But categories are abstract. Problems are concrete.
 
@@ -11,7 +11,7 @@ To see why this category is necessary, let's build the same thing four ways:
 - **The Website Builder way** (Webflow, Wix)
 - **The Traditional CMS way** (WordPress)
 - **The Headless CMS way** (Contentful, Sanity)
-- **The Component Web Platform way** (Uniweb)
+- **The Component Content System way** (Uniweb)
 
 We'll use one concrete example: a typical **Pricing Page**.
 
@@ -143,9 +143,9 @@ The issue isn't "headless can't preview." Modern headless tools have invested he
 
 ---
 
-## 4. Component Web Platform: Uniweb-style
+## 4. Component Content System: Uniweb-style
 
-A Component Web Platform changes the unit of work.
+A Component Content System changes the unit of work.
 
 You aren't managing pixels (Builder), wrestling plugins (WordPress), or filling out abstract forms (Headless). **You are composing components.**
 
@@ -187,7 +187,7 @@ The page is live-rendered as they work. No preview loop. No build wait. What the
 
 ### Why it works: The Capability Boundary
 
-The platform enforces a hard line between creator territory and system territory:
+The system enforces a hard line between creator territory and system territory:
 
 **Creators control:**
 
@@ -209,14 +209,14 @@ This is the **Capability Boundary**. Creators have genuine freedom inside it. Th
 
 ## The same page, summarized
 
-| Approach               | Unit of Work            | Strength             | Long-run Failure Mode         |
-| ---------------------- | ----------------------- | -------------------- | ----------------------------- |
-| Website Builder        | Pixels & layout         | Fast visual creation | Design Drift                  |
-| Traditional CMS        | Themes + plugins        | Broad flexibility    | Coupling & fragility          |
-| Headless CMS           | Content models & fields | Clean architecture   | Publishing surface disconnect |
-| Component Web Platform | Components              | Coherent evolution   | Requires a real Foundation    |
+| Approach                 | Unit of Work            | Strength             | Long-run Failure Mode         |
+| ------------------------ | ----------------------- | -------------------- | ----------------------------- |
+| Website Builder          | Pixels & layout         | Fast visual creation | Design Drift                  |
+| Traditional CMS          | Themes + plugins        | Broad flexibility    | Coupling & fragility          |
+| Headless CMS             | Content models & fields | Clean architecture   | Publishing surface disconnect |
+| Component Content System | Components              | Coherent evolution   | Requires a real Foundation    |
 
-That last column matters: a Component Web Platform expects the system to be designed. It's not "anything goes." If you don't invest in the Foundation, you don't get the benefits.
+That last column matters: a Component Content System expects the system to be designed. It's not "anything goes." If you don't invest in the Foundation, you don't get the benefits.
 
 ---
 
@@ -228,7 +228,7 @@ That last column matters: a Component Web Platform expects the system to be desi
 
 **If you're building a multi-channel content architecture with strong dev resources:** Headless can be right. The API-first model shines when content serves many frontends.
 
-**If your biggest problem is publishing at scale without drift:** A Component Web Platform is the missing model. It's for teams who need non-developers to publish safely, frequently, and without eroding the brand.
+**If your biggest problem is publishing at scale without drift:** A Component Content System is the missing model. It's for teams who need non-developers to publish safely, frequently, and without eroding the brand.
 
 ---
 
@@ -238,4 +238,4 @@ A website builder manages layout.
 A headless CMS manages structured content.
 A traditional CMS manages templates and plugins.
 
-A **Component Web Platform** manages how content becomes pages through components.
+A **Component Content System** manages how content becomes pages through components.
