@@ -43,8 +43,8 @@ Uniweb implements **Component Content Architecture (CCA)**—a standard for mode
 
 The result: content stays portable, components stay reusable, and the same foundation can power local development, static builds, or a full visual editing platform.
 
-- [Component Content Architecture](/blog/cca) — The architectural pattern
-- [Component Web Platforms](/blog/cwp) — The product category
+- [Component Content Architecture](/blog/05-cca-standard.md) — The architectural pattern
+- [Component Web Platforms](/blog/03-cwp-category.md) — The product category
 
 ## License
 
