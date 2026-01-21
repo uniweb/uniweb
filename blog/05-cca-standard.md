@@ -231,10 +231,10 @@ npx uniweb@latest create my-site --template marketing
 npx uniweb@latest create my-workspace --template multi
 ```
 
-- **Explore the category**: Read [Introducing Component Content Systems](/ccs) to understand the bigger picture
-- **Read the docs**: Full documentation at [docs.uniweb.io](https://docs.uniweb.io)
+- **Explore the category**: Read [Introducing Component Content Systems](./03-ccs-category.md) to understand the bigger picture
+- **Read the docs**: Full documentation at [uniweb.io/docs](https://uniweb.io/docs)
 - **Use the platform**: Deploy to [uniweb.app](https://uniweb.app) for a managed experience
-- **View the source**: [github.com/uniweb](https://github.com/uniweb)
+- **View the source**: [github.com/uniweb/cli](https://github.com/uniweb/cli)
 
 ---
 
