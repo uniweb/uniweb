@@ -102,7 +102,7 @@ Your content here.
 - `block.params` - Parameters defining rendering (same as the explicit `params` prop)
 - `block.input` - Dynamically fetched data
 - `block.page` - The page object that contains the block
-- `block.site` - The website object that contains the page that contains the block
+- `block.website` - The website object that contains the page that contains the block
 - `block.getChildBlocks()` - Access child blocks
 
 ## Component Terms
