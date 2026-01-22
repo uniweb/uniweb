@@ -50,8 +50,8 @@ function HeroSection({ content, params, block }) {
   // Extract content from the structured content object
   const { title, paragraphs, images } = content.main;
 
-  // Extract parameters with defaults
-  const { layout = "standard", theme = "light" } = params;
+  // Extract parameters - defaults come from meta.js
+  const { layout, theme } = params;
 
   // Render the content according to the parameters
   return (
@@ -71,18 +71,32 @@ function HeroSection({ content, params, block }) {
   );
 }
 
-// Block configuration: state (dynamic) and context (static)
-HeroSection.block = {
-  state: {
-    // Dynamic state that can change at runtime
-  },
+export default HeroSection;
+```
+
+Block configuration (context and initialState) is defined in meta.js alongside other component metadata:
+
+```javascript
+// meta.js
+export default {
+  title: 'Hero Section',
+  description: 'Bold hero section with headline and CTA',
+
+  // Static capabilities for cross-block coordination
   context: {
-    // Static properties for cross-block communication
-    allowTranslucentTop: true,
+    allowTranslucentTop: true,  // Header can overlay this section
+  },
+
+  // Initial values for mutable block state (optional)
+  initialState: {
+    // expanded: false,
+  },
+
+  params: {
+    layout: { type: 'select', options: ['standard', 'split'], default: 'standard' },
+    theme: { type: 'select', options: ['light', 'dark'], default: 'light' },
   },
 };
-
-export default HeroSection;
 ```
 
 ### Understanding the Content Object
@@ -183,11 +197,19 @@ function InteractiveComponent({ content, params, block }) {
   );
 }
 
-// Declare initial state for blocks using this component
-InteractiveComponent.block = {
-  state: {
+export default InteractiveComponent;
+```
+
+Initial state is declared in meta.js using the `initialState` field:
+
+```javascript
+// meta.js
+export default {
+  title: 'Interactive Component',
+  initialState: {
     count: 0
-  }
+  },
+  params: { ... },
 };
 ```
 
@@ -196,8 +218,8 @@ InteractiveComponent.block = {
 - `block.id` - Unique identifier for this block instance
 - `block.type` - Component type (matches frontmatter `type:`)
 - `block.themeName` - Theme setting (e.g., 'light', 'dark')
-- `block.state` - Dynamic state (from `Component.block.state`)
-- `block.context` - Static context (from `Component.block.context`)
+- `block.state` - Dynamic state (from `meta.js initialState`)
+- `block.context` - Static context (from `meta.js context`)
 - `block.childBlocks` - Array of child Block instances
 - `block.input` - Dynamic data (from data sources)
 - `block.page` - Reference to the parent Page
@@ -285,9 +307,25 @@ function NavBar({ content, params, block }) {
 }
 ```
 
-**Hero component declaring its context:**
+**Hero component declaring its context in meta.js:**
+
+```javascript
+// Hero/meta.js
+export default {
+  title: 'Hero Banner',
+  category: 'impact',
+
+  // Static context: capabilities that are always true for Hero components
+  context: {
+    allowTranslucentTop: true  // Heroes always support translucent navbar overlay
+  },
+
+  params: { ... },
+};
+```
 
 ```jsx
+// Hero/index.jsx
 function Hero({ content, params, block }) {
   return (
     <section className="relative h-screen">
@@ -296,12 +334,7 @@ function Hero({ content, params, block }) {
   );
 }
 
-// Static context: properties that are always true for Hero components
-Hero.block = {
-  context: {
-    allowTranslucentTop: true  // Heroes always support translucent navbar overlay
-  }
-};
+export default Hero;
 ```
 
 **Key distinction:**

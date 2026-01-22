@@ -195,11 +195,17 @@ function NavBar({ block }) {
 
   return <nav className={allowTranslucentTop ? 'transparent' : 'solid'}>...</nav>
 }
+```
 
-// Hero declares its static context
-Hero.block = {
-  context: { allowTranslucentTop: true }  // Static: all Heroes support translucent navbar
-}
+Hero declares its static context in meta.js (extracted to runtime schema at build time):
+
+```javascript
+// Hero/meta.js
+export default {
+  title: 'Hero Banner',
+  context: { allowTranslucentTop: true },  // Static: all Heroes support translucent navbar
+  params: { ... },
+};
 ```
 
 ### Block Info Structure
@@ -216,8 +222,8 @@ The `getBlockInfo()` method returns:
 ```
 
 **Key distinction:**
-- **`context`** — Static properties defined per component type. Never changes.
-- **`state`** — Dynamic properties per block instance. Can change via `useBlockState`.
+- **`context`** — Static capabilities defined in meta.js. Never changes. Describes what the component type supports.
+- **`state`** — Dynamic values per block instance. Initialized from meta.js `initialState`, can change via `useBlockState`.
 
 ## State and Context Management
 
