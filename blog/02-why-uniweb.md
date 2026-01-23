@@ -85,15 +85,14 @@ Natural content stays in markdown. Structured data goes in JSON blocks. Componen
 
 ```jsx
 export function Hero({ content, params }) {
-  const { title } = content.main.header
-  const { paragraphs, links } = content.main.body
+  const { title, paragraphs, links } = content
   const { theme = 'light' } = params
 
   return (
     <section className={theme === 'dark' ? 'bg-gray-900 text-white' : ''}>
       <h1>{title}</h1>
       <p>{paragraphs[0]}</p>
-      {links[0] && <a href={links[0].url}>{links[0].text}</a>}
+      {links[0] && <a href={links[0].href}>{links[0].label}</a>}
     </section>
   )
 }
