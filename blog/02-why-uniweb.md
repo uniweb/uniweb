@@ -16,11 +16,11 @@ Where does content live?
 
 - **Headless CMS.** Clean content modeling. But now you're building a frontend separately, wiring up APIs, managing the gap between what authors edit and what ships.
 
-Each approach works. Each has tradeoffs. And each time, you're solving the same problem: *how does content become pages through components?*
+Each approach works. Each has tradeoffs. And each time, you're solving the same problem: _how does content become pages through components?_
 
 Add localization—now you're wiring i18n infrastructure. Add a second similar site—do you copy the repo and maintain two codebases, or extract shared components and manage versioning?
 
-This is undifferentiated work. Infrastructure *around* your product, not your product.
+This is undifferentiated work. Infrastructure _around_ your product, not your product.
 
 ## The Insight
 
@@ -68,18 +68,16 @@ Build something great.
 
 The body gets semantically parsed into structured data—headings, paragraphs, links, images—organized and ready for your component. No parsing logic to write.
 
-For content that doesn't fit markdown—products, team members, events—use JSON blocks:
+For content that doesn't fit markdown—products, team members, events—use tagged blocks:
 
 ````markdown
-```json #team-member
-{
-  "name": "Sarah Chen",
-  "role": "Lead Architect"
-}
+```yaml:team-member
+name: Sarah Chen
+role: Lead Architect
 ```
 ````
 
-Natural content stays in markdown. Structured data goes in JSON blocks. Components receive both as clean objects.
+Natural content stays in markdown. Structured data goes in tagged blocks (YAML or JSON). Components receive both as clean objects.
 
 **Components are React.** Exposed components—the ones content authors select via `type`—receive `{ content, params }`:
 
@@ -122,11 +120,11 @@ You focus on components. The system handles plumbing.
 
 **Multiple sites, one Foundation.** A Foundation is self-contained—no dependency on any specific site. Use it three ways:
 
-| Mode | How it works |
-|------|--------------|
+| Mode             | How it works                       |
+| ---------------- | ---------------------------------- |
 | **Local folder** | Foundation lives in your workspace |
-| **npm package** | `pnpm add @acme/foundation` |
-| **Runtime link** | Foundation loads from a URL |
+| **npm package**  | `pnpm add @acme/foundation`        |
+| **Runtime link** | Foundation loads from a URL        |
 
 Improve a component, every site using that Foundation gets the update. Sites control their own versioning—automatic updates for patches, opt-in for major changes.
 

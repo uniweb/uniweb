@@ -24,10 +24,10 @@ To understand Foundations, you need to see the difference between developer-faci
 ### Developer-Facing Interface (Traditional Component Libraries)
 
 ```jsx
-import { HeroSection } from "@my/library";
+import { HeroSection } from '@my/library'
 
 function MyPage() {
-  return <HeroSection layout="centered" background="dark" title="Welcome" />;
+  return <HeroSection layout="centered" background="dark" title="Welcome" />
 }
 ```
 
@@ -100,19 +100,19 @@ A Foundation contains two types of components:
 
 ```jsx
 // Internal component - standard React, no framework involvement
-import { Button } from "some-ui-library";
+import { Button } from 'some-ui-library'
 
 function CallToAction({ text, href }) {
   return (
     <Button variant="primary" href={href}>
       {text}
     </Button>
-  );
+  )
 }
 
 // Exposed component - this is the content-facing interface
 export default function HeroSection({ block }) {
-  const { title, subtitle, ctaText, ctaLink } = block.main.content;
+  const { title, subtitle, ctaText, ctaLink } = block.main.content
 
   return (
     <section>
@@ -120,7 +120,7 @@ export default function HeroSection({ block }) {
       <p>{subtitle}</p>
       <CallToAction text={ctaText} href={ctaLink} />
     </section>
-  );
+  )
 }
 ```
 
@@ -170,24 +170,22 @@ For many components, this is sufficient. A feature section with headings, paragr
 
 However, some content models don't map naturally to markdown's patterns. A team member with name, role, bio, and avatar? A product with SKU, price, variants, and specifications? These need explicit structure.
 
-For these cases, Uniweb supports JSON code blocks with schema hashbangs:
+For these cases, Uniweb supports tagged code blocks:
 
 ````markdown
-```json #team-member
-{
-  "name": "Sarah Chen",
-  "role": "Lead Architect",
-  "bio": "10+ years building distributed systems",
-  "avatar": "/assets/sarah.jpg"
-}
+```yaml:team-member
+name: Sarah Chen
+role: Lead Architect
+bio: 10+ years building distributed systems
+avatar: /assets/sarah.jpg
 ```
 ````
 
-The `#team-member` schema tag references a content schema that validates structure and ensures type safety. Your component receives this structured data:
+The tag after the colon (`team-member`) routes the parsed data to `content.data`. Your component receives this structured data:
 
 ```jsx
-export default function TeamMember({ block }) {
-  const member = block.getBlockData("#team-member");
+export default function TeamMember({ content }) {
+  const member = content.data['team-member'] || {}
   // member = { name: "Sarah Chen", role: "Lead Architect", ... }
 
   return (
@@ -197,11 +195,11 @@ export default function TeamMember({ block }) {
       <p className="role">{member.role}</p>
       <p className="bio">{member.bio}</p>
     </div>
-  );
+  )
 }
 ```
 
-**The design philosophy**: Use markdown's natural structure for most content. Reach for JSON blocks only when the content model requires it.
+**The design philosophy**: Use markdown's natural structure for most content. Use tagged blocks (YAML or JSON) only when the content model requires explicit structure.
 
 ## Progressive Complexity
 
