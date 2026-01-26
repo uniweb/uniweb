@@ -18,11 +18,22 @@ This reference clarifies how Uniweb Framework uses key terms, many of which have
 
 ### Module
 
-**In Uniweb:** The technical packaging and delivery mechanism that connects a Foundation to a site at runtime. Modules use Webpack Module Federation to load dynamically, enabling instant updates without redeployment.
+**In Uniweb:** The technical packaging and delivery mechanism that connects a Foundation to a site at runtime. Foundations are built as ES modules that can be loaded dynamically via `import()`, with shared dependencies (React) resolved through browser import maps.
 
-**Different from:** JavaScript modules (ESM/CommonJS) or CMS plugins in other systems. Uniweb modules are specifically about runtime delivery of complete design systems.
+**Different from:** Traditional bundled applications where components are compiled into the site. Uniweb keeps Foundations separate, loaded at runtime.
 
-**Technical detail:** Modules enable dependency sharing between Foundations and sites, allowing for efficient loading and consistent React versions.
+**Technical detail:** Foundations output `foundation.js` (bundled components) and `schema.json` (component metadata). The browser's import map ensures all modules share the same React instance:
+
+```html
+<script type="importmap">
+  { "imports": { "react": "https://esm.sh/react@18" } }
+</script>
+```
+
+**Distribution modes:**
+- **Local workspace** — Foundation as npm dependency, full HMR during development
+- **Runtime loading** — Foundation loaded via URL and import maps (production)
+- **Dynamic backend** — Platform injects foundation URL and content (uniweb.app)
 
 ### Site
 
@@ -95,15 +106,18 @@ Your content here.
 
 **Different from:** UI blocks or widgets in other frameworks. Uniweb blocks are runtime instances with lifecycle, state management, and parent-child relationships.
 
-**Key properties:**
+**Component props** (what components receive):
 
-- `block.id` - Unique identifier
-- `block.content` - Content to render (same as the explicit `content` prop)
-- `block.params` - Parameters defining rendering (same as the explicit `params` prop)
-- `block.input` - Dynamically fetched data
-- `block.page` - The page object that contains the block
-- `block.website` - The website object that contains the page that contains the block
-- `block.getChildBlocks()` - Access child blocks
+- `content` — Structured content from markdown (title, paragraphs, links, imgs, items, etc.)
+- `params` — Configuration from frontmatter with defaults applied
+- `block` — The block instance for context access
+
+**Block properties** (accessing via `block`):
+
+- `block.page` — The Page containing this block
+- `block.website` — The Website instance
+- `block.childBlocks` — Nested blocks (subsections)
+- `block.input` — Dynamic input data
 
 ## Component Terms
 
@@ -161,7 +175,7 @@ function MyComponent({ content, params, block }) {
 
 - Asset optimization (image compression, CSS/JS minification)
 - Content transformation (markdown extensions, AI translation)
-- Build customization (webpack configuration, development tools)
+- Build customization (Vite plugins, development tools)
 - CLI extension (additional commands and capabilities)
 
 ### Schema
@@ -221,15 +235,15 @@ foundation:
 
 ### Uniweb Framework
 
-**What it is:** The open-source (GPL-3.0) framework for building Foundations and sites. It includes a Runtime Engine (RTE) to render sites with their chosen Foundations.
+**What it is:** The open-source framework for building Foundations and sites. Published as `uniweb` on npm, with supporting packages (`@uniweb/build`, `@uniweb/runtime`, `@uniweb/kit`, `@uniweb/core`).
 
 **What it provides:**
 
 - CLI tools for creating and managing projects
-- Development server with hot reload
-- Build system (Webpack, Babel, PostCSS)
+- Development server with hot reload (Vite)
+- Build system with SSG pre-rendering
 - Runtime for connecting content and components
-- Module Federation for dynamic loading
+- File-based routing and i18n support
 
 ### Uniweb App
 
@@ -272,7 +286,7 @@ foundation:
 
 ### "Content and code are bundled together"
 
-**False.** They remain separate until runtime. Sites reference Foundations dynamically via Module Federation.
+**False.** They remain separate until runtime. Sites load Foundations dynamically—content in markdown, components in the Foundation bundle.
 
 ### "Plugins can add runtime features"
 
@@ -284,9 +298,8 @@ foundation:
 
 ## Related Documentation
 
-- [Understanding Uniweb](../getting-started/understanding-uniweb.md) - Conceptual architecture overview
-- [Developers Guide](../developers-guide.md) - Technical guide for building Foundations
-
-## Contributing to This Reference
-
-This terminology reference is maintained to help clarify Uniweb's specific terminology. If you notice ambiguity or have suggestions for additional terms, please contribute via GitHub.
+- [CLI README](https://github.com/uniweb/cli) — Getting started, templates, commands
+- [Content Structure](https://github.com/uniweb/cli/blob/main/docs/content-structure.md) — How markdown becomes component props
+- [Component Metadata](https://github.com/uniweb/cli/blob/main/docs/component-metadata.md) — The meta.js schema reference
+- [Runtime Linking](../sites/runtime-linking.md) — How foundations load via import maps
+- [Dual-Mode Development](../sites/dual-mode-development.md) — Standard import vs runtime loading
