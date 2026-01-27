@@ -7,7 +7,7 @@ Uniweb separates **content** (markdown files, structured data) from **components
 ## Quick Start
 
 ```bash
-npx uniweb@latest create my-site --template marketing
+npm create uniweb my-site --template marketing
 cd my-site
 pnpm install
 pnpm dev
