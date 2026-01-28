@@ -221,7 +221,6 @@ export default {
 - `block.state` - Dynamic state (from `meta.js initialState`)
 - `block.context` - Static context (from `meta.js context`)
 - `block.childBlocks` - Array of child Block instances
-- `block.input` - Dynamic data (from data sources)
 - `block.page` - Reference to the parent Page
 - `block.website` - Reference to the Website
 
@@ -564,22 +563,24 @@ function Accordion({ content, params, block }) {
 
 ### Dynamic Data Integration
 
+Fetched data (from `data:` or `fetch:` in frontmatter) is available via `content.data`:
+
 ```jsx
 function ProductList({ content, params, block }) {
-  const products = block.input || [];
+  const products = content.data?.products || [];
   const { layout = "grid", columns = 3 } = params;
 
   return (
     <div className="product-list">
-      <h2>{content.main.title}</h2>
+      <h2>{content.title}</h2>
       {products.length === 0 ? (
         <p>No products available</p>
       ) : (
         <div className={`product-grid cols-${columns}`}>
-          {products.map((product, index) => (
-            <div key={index} className="product-card">
-              <h3>{product.getTitle()}</h3>
-              <p>{product.getDescription()}</p>
+          {products.map((product) => (
+            <div key={product.slug} className="product-card">
+              <h3>{product.title}</h3>
+              <p>{product.description}</p>
             </div>
           ))}
         </div>

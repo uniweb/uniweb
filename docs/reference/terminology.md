@@ -69,29 +69,39 @@ This reference clarifies how Uniweb Framework uses key terms, many of which have
 
 ## Content Structure Terms
 
+Uniweb has two distinct content types: **page content** (sections) and **reusable content** (collections).
+
 ### Page
 
-**In Uniweb:** A folder whose path that maps to a URL path and contains markdown files representing sections, and a `page.yml` file defining page properties. Pages organize sections and define metadata like title, description, and section hierarchy.
+**In Uniweb:** A folder whose path maps to a URL path, containing markdown files (sections) and a `page.yml` file defining page properties. Pages organize sections and define metadata like title, description, and layout.
 
 **Different from:** Template files in traditional systems where the page structure is code. In Uniweb, pages are pure content organization.
 
 **URL mapping:**
 
-- `pages/index/` → `/` (home page)
+- `pages/home/` → `/` (home page, when `index: home` in site.yml)
 - `pages/about/` → `/about`
-- `pages/blog/post-name/` → `/blog/post-name`
+- `pages/blog/` → `/blog`
+- `pages/blog/[slug]/` → `/blog/:slug` (dynamic route)
 
 ### Section
 
-**In Uniweb:** A content unit represented by a markdown file, rendered by a component specified in the frontmatter. Sections are the atomic units of content that content creators work with.
+**In Uniweb:** A content unit represented by a markdown file within a page folder, rendered by a component specified in the frontmatter. Sections are **page-local**—they belong to exactly one page and define that page's structure.
 
-**Different from:** Page regions or blocks in traditional CMSs that are often tied to specific layouts.
+**Different from:** Collections, which are reusable content that can appear on multiple pages.
+
+**Key characteristics:**
+
+- Lives in `pages/<page-name>/<section>.md`
+- Has a numeric prefix for ordering: `1-hero.md`, `2-features.md`
+- Belongs to exactly one page
+- Rendered by a component specified in frontmatter `type:`
 
 **Example:**
 
 ```markdown
 ---
-type: HeroSection
+type: Hero
 layout: centered
 ---
 
@@ -100,9 +110,74 @@ layout: centered
 Your content here.
 ```
 
+### Collection
+
+**In Uniweb:** A set of reusable content items stored outside the page hierarchy. Collections are for content that appears in multiple places—like blog articles shown as cards on the home page, as a list on the blog page, and as full articles on individual pages.
+
+**Different from:** Sections, which are page-local. A section exists in one place; a collection item can be referenced anywhere.
+
+**Key characteristics:**
+
+- Lives in `library/<collection-name>/`
+- Declared in `site.yml` under `collections:`
+- Built to `public/data/<collection-name>.json`
+- Referenced by pages using `data: <collection-name>`
+
+**Common examples:**
+
+- Blog articles (`library/articles/`)
+- Team members (`library/team/`)
+- Products (`library/products/`)
+- Testimonials (`library/testimonials/`)
+
+### Collection Item
+
+**In Uniweb:** A single entry in a collection, represented by a markdown file with frontmatter metadata and body content. Each item has a `slug` (derived from filename) that serves as its stable identifier.
+
+**Structure:**
+
+```markdown
+---
+title: Getting Started with Uniweb
+date: 2025-01-15
+author: Sarah Chen
+tags: [tutorial, beginner]
+---
+
+Learn how to build your first site with Uniweb.
+
+## Installation
+
+First, create a new project...
+```
+
+**Output fields:**
+
+| Field | Source |
+|-------|--------|
+| `slug` | Filename without extension |
+| `title`, `date`, etc. | Frontmatter |
+| `content` | Parsed body (ProseMirror JSON) |
+| `excerpt` | Auto-generated or from frontmatter |
+
+### Library
+
+**In Uniweb:** The `library/` folder where collections are stored. Each subfolder is a collection.
+
+```
+site/
+├── pages/           # Page hierarchy (sections)
+└── library/         # Reusable content (collections)
+    ├── articles/
+    ├── team/
+    └── products/
+```
+
+**Different from:** `pages/`, which defines the site's navigation structure. Library content has no inherent URL—it's data that pages can fetch and display.
+
 ### Block
 
-**In Uniweb:** The runtime JavaScript representation of a section. When a section is loaded, the framework creates a block object that provides content, params, context, and methods to components.
+**In Uniweb:** The runtime JavaScript representation of a section. When a section is loaded, the framework creates a Block instance that provides content, params, context, and methods to components.
 
 **Different from:** UI blocks or widgets in other frameworks. Uniweb blocks are runtime instances with lifecycle, state management, and parent-child relationships.
 
@@ -110,14 +185,38 @@ Your content here.
 
 - `content` — Structured content from markdown (title, paragraphs, links, imgs, items, etc.)
 - `params` — Configuration from frontmatter with defaults applied
-- `block` — The block instance for context access
+- `block` — The Block instance for context access
 
 **Block properties** (accessing via `block`):
 
 - `block.page` — The Page containing this block
 - `block.website` — The Website instance
 - `block.childBlocks` — Nested blocks (subsections)
-- `block.input` — Dynamic input data
+
+**Fetched data** is accessed via `content.data`, not directly on the block:
+
+```jsx
+function BlogList({ content, params, block }) {
+  const articles = content.data?.articles || []
+  // ...
+}
+```
+
+### Section vs Collection: When to Use Which
+
+| Use Case | Section | Collection |
+|----------|---------|------------|
+| Hero banner on home page | ✓ | |
+| About page introduction | ✓ | |
+| Blog post list | | ✓ |
+| Individual blog articles | | ✓ |
+| Team member profiles | | ✓ |
+| Contact form | ✓ | |
+| Product catalog | | ✓ |
+| Testimonials (reused on multiple pages) | | ✓ |
+| Page-specific testimonial | ✓ | |
+
+**Rule of thumb:** If the content appears in one place, it's a section. If it appears in multiple places or needs to be queried/filtered, it's a collection.
 
 ## Component Terms
 
