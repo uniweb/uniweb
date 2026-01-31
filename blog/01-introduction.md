@@ -21,7 +21,7 @@ my-project/
 │   └── locales/         # i18n
 └── foundation/          # Your React components
     └── src/
-        └── components/
+        └── sections/
 ```
 
 **Content authors work in markdown. Component authors work in React. Neither can break the other's work.**
@@ -66,7 +66,7 @@ export function Hero({ content, params }) {
 }
 ```
 
-The `{ content, params }` interface is only for *exposed* components—the ones content creators select in frontmatter. Internal components use regular React props. Import any packages. Use any patterns. Full React capabilities, complex interactions, API calls—whatever the project needs.
+The `{ content, params }` interface is only for *section types*—the ones content creators select in frontmatter. Other components use regular React props. Import any packages. Use any patterns. Full React capabilities, complex interactions, API calls—whatever the project needs.
 
 ## Domain Adaptability
 

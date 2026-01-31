@@ -91,7 +91,7 @@ uniweb build --prerender --foundation-dir ../my-foundation
 
 **Foundation Build Process:**
 
-1. Discovers components from `src/components/*/meta.js`
+1. Discovers section types from `src/sections/` and `src/components/` (with `meta.js`)
 2. Generates entry point (`_entry.generated.js`)
 3. Runs Vite build
 4. Processes preview images (converts to WebP)

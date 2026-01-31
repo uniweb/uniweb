@@ -45,10 +45,10 @@ A Foundation is a self-contained package that bundles everything needed to defin
 ```
 foundation/
 └── src/
-    └── components/
+    └── sections/
         ├── Hero/
         │   ├── index.jsx      # The React component
-        │   └── schema.json    # What content it accepts
+        │   └── meta.js        # What content it accepts
         ├── Features/
         └── Pricing/
 ```
@@ -59,7 +59,7 @@ A Foundation contains:
 The actual code—React components (or any rendering technology)—that turns content into UI. These are standard components; no proprietary abstractions.
 
 **Schema Manifests**
-The formal definition of what content each component accepts: its parameters, their types, their constraints. The schema is what makes a component "exposed" to content creators.
+The formal definition of what content each component accepts: its parameters, their types, their constraints. The schema is what makes a component a *section type*—addressable by content creators.
 
 **Composition Rules**
 The logic that defines how components can be arranged: what can contain what, what sequences are valid, what options are exposed.
@@ -173,7 +173,7 @@ my-project/
 │   └── locales/         # i18n
 └── foundation/          # Your React components
     └── src/
-        └── components/
+        └── sections/
 ```
 
 Content authors work in markdown. Component authors work in React. The separation is architectural—neither can break the other's work, and component updates flow to every site using them.

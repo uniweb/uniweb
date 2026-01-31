@@ -65,7 +65,7 @@ This means you can focus entirely on the user experience without worrying about 
 
 ## The Component Interface Contract
 
-Every exposed Foundation component receives the same props structure from the engine. This is the contract between the platform and your components.
+Every section type receives the same props structure from the engine. This is the contract between the platform and your components.
 
 ### The Standard Props Structure
 

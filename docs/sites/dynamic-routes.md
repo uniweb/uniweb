@@ -1,8 +1,6 @@
-# Dynamic Routes (Planned)
+# Dynamic Routes
 
-> **Status:** Planned for future release
-
-This document outlines the planned implementation for dynamic routes in Uniweb - pages generated from data sources like blog articles, product catalogs, or documentation entries.
+This document describes dynamic routes in Uniweb — pages generated from data sources like blog articles, product catalogs, or documentation entries.
 
 ## Overview
 

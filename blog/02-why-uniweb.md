@@ -47,7 +47,7 @@ my-project/
 │   └── locales/         # i18n
 └── foundation/          # Components
     └── src/
-        └── components/
+        └── sections/
             └── Hero/
 ```
 
@@ -79,7 +79,7 @@ role: Lead Architect
 
 Natural content stays in markdown. Structured data goes in tagged blocks (YAML or JSON). Components receive both as clean objects.
 
-**Components are React.** Exposed components—the ones content authors select via `type`—receive `{ content, params }`:
+**Components are React.** Section types—the ones content authors select via `type`—receive `{ content, params }`:
 
 ```jsx
 export function Hero({ content, params }) {
@@ -96,7 +96,7 @@ export function Hero({ content, params }) {
 }
 ```
 
-Internal components use normal React props. No special interface.
+Other components use normal React props. No special interface.
 
 **Frontmatter parameters.** Three are standard: `type` (which component renders this content), `theme` (consistent styling across components), and `preset` (predefined parameter combinations for quick selection). Everything else is yours to define. Want a `layout` option? An `emphasis` toggle? Define it in your schema. Content authors configure; you decide what's configurable.
 
