@@ -222,45 +222,25 @@ function BlogList({ content, params, block }) {
 
 ### Component
 
-**In Uniweb:** A React component that renders content according to the Uniweb interface—receiving `{ content, params, block }` props. Components come in two types: exposed (available to content creators) and internal (implementation details).
+**In Uniweb:** A React component. Most components in a foundation are ordinary React — buttons, cards, renderers, layout helpers. They live in `src/components/` (or wherever makes sense) and use standard React props, hooks, and patterns.
 
-**Different from:** Standard React components without the Uniweb content/params/block interface. While Uniweb components can use standard React components internally, the exposed layer must follow the Uniweb interface.
+The small number of components that content creators can reference by name in frontmatter are called **section types**. These have a `meta.js` file and receive `{ content, params, block }` props. Everything else is just a component — no special qualifier needed.
 
-**The interface:**
+### Section Type
 
-```jsx
-function MyComponent({ content, params, block }) {
-  // content: Structured data from markdown
-  // params: Configuration from frontmatter
-  // block: Runtime context and utilities
-  return <div>...</div>;
-}
-```
+**In Uniweb:** A component that content creators can select via `type:` in markdown frontmatter. Section types sit at the boundary between content and code, requiring a `meta.js` file that declares the content interface — what content the component expects and what params it exposes.
 
-### Exposed Component
-
-**In Uniweb:** A component that content creators can reference in markdown frontmatter. These components sit at the boundary between content and code, requiring a `meta.js` file that defines their interface.
-
-**Also called:** User-facing component, boundary component
+**Also called:** Content interface (when referring to the architectural pattern)
 
 **Key characteristics:**
 
-- Defined in Foundation's component directory
+- Lives in `src/sections/` (or `src/components/` for older foundations)
 - Has a `meta.js` file
 - Follows the `{ content, params, block }` interface
 - Visible to content creators and visual editors
+- Entry file can be named (`Hero/Hero.jsx`) or index (`Hero/index.jsx`)
 
-### Internal Component
-
-**In Uniweb:** Regular React components used within exposed components for rendering logic. These are standard React—they can use any props structure, hooks, and patterns. They're not directly available to content creators.
-
-**Key characteristics:**
-
-- Standard React components
-- No schema files needed
-- Not exposed in the Foundation's interface
-- Can use any npm packages and patterns
-- Composed by exposed components
+**Note:** The earlier term "exposed component" has been retired. "Section type" maps directly to what content authors experience — they write section files and choose a `type:`. See the [Terminology Guide](../../../docs/internal/terminology-guide.md) for the full rationale.
 
 ## Extension Terms
 
@@ -290,7 +270,7 @@ function MyComponent({ content, params, block }) {
 
 **Three types:**
 
-1. **Component schemas** - Define exposed component interfaces
+1. **Component schemas** - Define section type interfaces
 2. **Content schemas** - Define structured data in JSON blocks
 3. **Foundation schema** - Defines Foundation-level configuration
 

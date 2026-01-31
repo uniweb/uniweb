@@ -92,14 +92,14 @@ Webpack's Module Federation technology dynamically loads Foundations at runtime,
 
 ## Inside vs Outside the Boundary
 
-A Foundation contains two types of components:
+A Foundation contains two kinds of things:
 
-**Exposed components** sit at the boundary with content creators. These are defined by schemas and can be referenced in markdown frontmatter. This is where the Framework's architecture matters—these components receive preprocessed content, follow the content-facing interface conventions, and must be declared in schemas.
+**Section types** sit at the boundary with content creators. These are components with a `meta.js` file — they can be referenced in markdown frontmatter via `type:`. This is where the Framework's architecture matters: these components receive preprocessed content, follow the content-facing interface conventions, and are discoverable by the build system.
 
-**Internal components** are pure React implementation details. They're imported and used by your exposed components using standard React patterns. Import any npm packages you want. Use any styling approach. Compose components however you prefer. This is just regular React development—the Framework doesn't prescribe anything here.
+**Everything else** is ordinary React. Buttons, cards, renderers, layout helpers — imported and used by your section types using standard React patterns. Import any npm packages you want. Use any styling approach. Compose components however you prefer. This is just regular React development — the Framework doesn't prescribe anything here.
 
 ```jsx
-// Internal component - standard React, no framework involvement
+// Ordinary component - standard React, no framework involvement
 import { Button } from 'some-ui-library'
 
 function CallToAction({ text, href }) {
@@ -110,23 +110,23 @@ function CallToAction({ text, href }) {
   )
 }
 
-// Exposed component - this is the content-facing interface
-export default function HeroSection({ block }) {
-  const { title, subtitle, ctaText, ctaLink } = block.main.content
+// Section type - this is the content-facing interface
+export default function HeroSection({ content }) {
+  const { title, subtitle, links } = content
 
   return (
-    <section>
+    <div>
       <h1>{title}</h1>
       <p>{subtitle}</p>
-      <CallToAction text={ctaText} href={ctaLink} />
-    </section>
+      {links[0] && <CallToAction text={links[0].label} href={links[0].href} />}
+    </div>
   )
 }
 ```
 
-Content creators only interact with `HeroSection` (because it's in a schema). The `CallToAction` component is invisible to them—it's internal implementation. This boundary keeps concerns separated: your markdown content references `HeroSection`, your code composes `HeroSection` from internal components.
+Content creators only interact with `HeroSection` (because it has `meta.js`). The `CallToAction` component is invisible to them — it's an ordinary React component. This boundary keeps concerns separated: your markdown content references `HeroSection`, your code composes `HeroSection` from regular components.
 
-**This is why "Foundation" fits better than "component library."** You're not exposing every component to content creators. You're building a foundation with a carefully designed surface area—the exposed components—while the internal structure is entirely up to you and standard React practices.
+**This is why "Foundation" fits better than "component library."** You're not exposing every component to content creators. You're building a foundation with a carefully designed surface area — the section types — while the internal structure is entirely up to you and standard React practices.
 
 ## The Content-Facing Interface
 
@@ -144,7 +144,7 @@ background: dark
 
 This is the contract boundary: content declares _what_ component to use and _how_ to configure it, while the Foundation provides the implementation. Content creators never touch JavaScript—they compose with components as if they were native features.
 
-**Only exposed components appear in this interface.** Internal components—the React components you use to build your exposed components—remain invisible to content creators. They're standard React implementation details, composed using normal import patterns and npm packages. The Framework only cares about the boundary layer.
+**Only section types appear in this interface.** The regular React components you use to build your section types remain invisible to content creators. They're standard React implementation details, composed using normal import patterns and npm packages. The Framework only cares about the boundary layer.
 
 ### Component Schemas Define the Contract
 
@@ -211,7 +211,7 @@ The framework supports the entire spectrum of use cases:
 
 Start anywhere on this spectrum and grow as needs evolve. The architecture doesn't dictate your complexity—it accommodates it. You're not compromising by starting simple; you're making a pragmatic choice that preserves future options.
 
-**The Framework is unopinionated about implementation.** How you build your exposed components internally—what npm packages you use, how you structure internal components, what styling approach you take—is entirely standard React development. The Framework only defines the boundary layer where components meet content. Inside that boundary, it's your choice.
+**The Framework is unopinionated about implementation.** How you build your section types internally — what npm packages you use, how you organize your components, what styling approach you take — is entirely standard React development. The Framework only defines the boundary layer where components meet content. Inside that boundary, it's your choice.
 
 ## Single Source of Truth
 

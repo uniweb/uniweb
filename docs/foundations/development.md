@@ -158,7 +158,7 @@ export default {
     limit: 3,
   },
 
-  // Set to false to hide from editor (internal component)
+  // Set to false to hide from content authors
   // exposed: false,
 };
 ```

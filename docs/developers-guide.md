@@ -18,32 +18,21 @@ When building Foundations for websites, you're creating more than just React com
 
 This dual interface is what makes Foundations different from traditional component libraries. See [Understanding Uniweb](getting-started/understanding-uniweb.md) for the conceptual foundation behind this architecture.
 
-### Two Types of Components in a Foundation
+### Section Types vs Components
 
-The Framework supports two distinct types of components:
+A foundation has two kinds of things:
 
-1. **Exposed components**:
+1. **Section types** — the small number of components that content creators can select by name in markdown files. These have a `meta.js` file, follow the `{ content, params, block }` interface, and act as the bridge between content and code.
 
-   - Components that content creators can select in markdown files
-   - Follow the special `{ content, params, block }` interface
-   - Require a `meta.js` file
-   - Act as the bridge between content and code
-   - Can be composed through section hierarchy (parent-child relationships)
+2. **Components** — everything else. Regular React components used within section types for rendering. Standard React patterns, any props structure, any npm packages. No special files or interfaces needed. Most of the actual UI rendering happens here.
 
-2. **Internal components**:
-   - Regular React components used within your implementations
-   - Follow standard React patterns and can use any props structure
-   - Don't require schema files or special interfaces
-   - Not directly available to content creators
-   - Handle most of the actual rendering and UI logic
-
-This distinction is crucial: Uniweb fully supports standard React development patterns. In fact, most of your actual UI rendering should happen in internal components, with exposed components primarily handling the content/code bridge.
+This distinction matters: Uniweb fully supports standard React development patterns. Most of your rendering logic should live in regular components, with section types primarily handling the content/code bridge.
 
 ## Building Components
 
-### Component Interface
+### Section Type Interface
 
-Every Foundation exposed component follows this interface:
+Every section type follows this interface:
 
 ```jsx
 function HeroSection({ content, params, block }) {
@@ -372,12 +361,12 @@ function HeroSection({ content, params }) {
 }
 ```
 
-### Using Internal Components
+### Composing with Regular Components
 
-Most rendering logic should live in internal (standard React) components:
+Most rendering logic should live in regular React components:
 
 ```jsx
-// Exposed component that content creators can select
+// Section type — content creators select this via type: TeamSection
 function TeamSection({ content, params, block }) {
   const { columns = 3, cardStyle = "standard" } = params;
 
@@ -402,7 +391,7 @@ function TeamSection({ content, params, block }) {
   );
 }
 
-// Internal component - standard React
+// Regular component — standard React, no meta.js
 function StandardTeamCard({ name, role, bio, image }) {
   return (
     <div className="team-member-card">
@@ -417,7 +406,7 @@ function StandardTeamCard({ name, role, bio, image }) {
 
 ## Component Configuration
 
-Each exposed component has a `meta.js` file:
+Each section type has a `meta.js` file:
 
 ```js
 // components/HeroSection/meta.js
@@ -597,7 +586,7 @@ function ProductList({ content, params, block }) {
 3. **Provide sensible defaults** - Components should work without configuration
 4. **Handle edge cases gracefully** - Missing content, empty arrays, invalid values
 5. **Document thoroughly** - Write clear parameter descriptions
-6. **Keep exposed components focused** - Move rendering logic to internal components
+6. **Keep section types thin** - Move rendering logic to regular components
 7. **Always provide a Section component** - The default for content without explicit component selection
 
 ## Getting Started
