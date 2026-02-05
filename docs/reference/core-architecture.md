@@ -65,17 +65,6 @@ constructor(pageData, id, website, ...) {
   // 2. Page creates Blocks, passing references
   this.pageBlocks = this.buildPageBlocks(...)
 }
-
-// Inside buildPageBlocks
-initBlockReferences(block) {
-  block.page = this
-  block.website = this.website
-
-  // Recursively for child blocks
-  for (const child of block.childBlocks) {
-    this.initBlockReferences(child)
-  }
-}
 ```
 
 This ensures every Block has valid `page` and `website` references from the moment it's created.
@@ -279,8 +268,6 @@ this.childBlocks = blockData.subsections
   : []
 ```
 
-Child blocks get their `page` and `website` references from `initBlockReferences()`, which recurses into children.
-
 ### Rendering Child Blocks
 
 The runtime provides a `ChildBlocks` component that's registered globally:
@@ -381,8 +368,6 @@ test('cross-block communication', () => {
 1. **Block lookups** — `getBlockIndex()` uses `indexOf()` which is O(n). For pages with many blocks, consider caching.
 
 2. **State synchronization** — `useBlockState` creates a closure each render. This is unavoidable with the bridge pattern.
-
-3. **Child block recursion** — `initBlockReferences` recurses through all children. Deep nesting could be slow, but typical sites have shallow hierarchies.
 
 ## Related Documentation
 
