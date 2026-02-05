@@ -1,5 +1,10 @@
 # Uniweb
 
+[![Discord](https://img.shields.io/discord/1451393227604361228?color=5865F2&label=Discord&logo=discord&logoColor=white)](https://discord.gg/TkmkA5vH)
+[![Twitter Follow](https://img.shields.io/twitter/follow/uniweb?style=flat&logo=x&color=000000)](https://twitter.com/uniweb)
+[![npm](https://img.shields.io/npm/v/uniweb?color=cb3837&logo=npm)](https://www.npmjs.com/package/uniweb)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+
 A component content architecture for React. Build sites where content authors and component developers can't break each other's work—and scale from local files to visual editing without rewrites.
 
 Uniweb separates **content** (markdown files, structured data) from **components** (React, portable across sites). The architecture enforces this separation, so teams can work independently and foundations can power multiple sites—locally or on the managed platform.
