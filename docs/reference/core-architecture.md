@@ -289,11 +289,11 @@ Pages have five block groups:
 
 ```javascript
 pageBlocks: {
-  header: Block[] | null,  // From @header special page
+  header: Block[] | null,  // From layout/header.md
   body: Block[],           // Main content sections
-  footer: Block[] | null,  // From @footer special page
-  left: Block[] | null,    // Left panel
-  right: Block[] | null    // Right panel
+  footer: Block[] | null,  // From layout/footer.md
+  left: Block[] | null,    // From layout/left.md
+  right: Block[] | null    // From layout/right.md
 }
 ```
 
