@@ -36,7 +36,7 @@ foundation-example/
 ├── src/
 │   ├── styles.css              # Tailwind source
 │   ├── meta.js                 # Foundation metadata
-│   ├── exports.js              # (optional) Custom Layout, props
+│   ├── foundation.js           # (optional) Custom Layout, props, vars
 │   ├── _entry.generated.js     # Auto-generated entry point
 │   └── components/
 │       └── *.jsx
