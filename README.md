@@ -24,7 +24,7 @@ See the [CLI documentation](https://github.com/uniweb/cli) for templates, comman
 
 | Repository                                              | Description                                           |
 | ------------------------------------------------------- | ----------------------------------------------------- |
-| [uniweb/cli](https://github.com/uniweb/cli)             | CLI for creating and building projects (`npx uniweb`) |
+| [uniweb/cli](https://github.com/uniweb/cli)             | CLI for creating and building projects (`npm i -g uniweb`) |
 | [uniweb/build](https://github.com/uniweb/build)         | Foundation build tooling                              |
 | [uniweb/runtime](https://github.com/uniweb/runtime)     | Foundation loader and orchestrator for sites          |
 | [uniweb/templates](https://github.com/uniweb/templates) | Official project templates                            |
