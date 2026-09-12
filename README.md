@@ -328,7 +328,7 @@ The full framework spans 20+ focused repositories covering the runtime, build sy
 
 ## Community
 
-[Website](https://uniweb.io) · [Uniweb App](https://uniweb.app) · [Discord](https://discord.gg/TkmkA5vH) · [X / Twitter](https://twitter.com/uniweb)
+[Website](https://uniweb.io) · [Uniweb App](https://uniweb.app) · [Discord](https://discord.gg/TkmkA5vH) · [X / Twitter](https://twitter.com/uniwebcms)
 
 Uniweb is open source under the **Apache 2.0** license.
 
