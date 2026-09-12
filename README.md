@@ -1,5 +1,5 @@
 [![Discord](https://img.shields.io/discord/1451393227604361228?color=5865F2&label=Discord&logo=discord&logoColor=white)](https://discord.gg/TkmkA5vH)
-[![Twitter Follow](https://img.shields.io/twitter/follow/uniweb?style=flat&logo=x&color=000000)](https://twitter.com/uniwebcms)
+[![Twitter Follow](https://img.shields.io/twitter/follow/uniwebcms?style=flat&logo=x&color=000000)](https://twitter.com/uniwebcms)
 [![npm](https://img.shields.io/npm/v/uniweb?color=cb3837&logo=npm)](https://www.npmjs.com/package/uniweb)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 
