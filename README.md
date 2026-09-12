@@ -13,6 +13,20 @@ Developers build real React components, schemas, and content structures in a nor
 
 **Developers define the vocabulary. Authors compose with it. Uniweb keeps both sides in sync.**
 
+**Traditional**
+
+```text
+developer builds → hands off → CMS users edit
+```
+
+**Uniweb**
+
+```text
+developer project ⇄ Uniweb ⇄ author workspace
+       ↑                         ↑
+       └──── both keep working ──┘
+```
+
 ## One system, two working environments
 
 Developers and authors don't need to work in the same tool.
