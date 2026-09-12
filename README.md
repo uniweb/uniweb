@@ -5,11 +5,6 @@
 
 # Uniweb
 
-
-```bash
-npx uniweb create
-```
-
 ## What if visual editing and a normal Git workflow were two interfaces to the same website?
 
 Uniweb is an open-source React framework and a connected visual authoring platform.
@@ -30,6 +25,19 @@ developer builds → hands off → CMS users edit
 developer project ⇄ Uniweb ⇄ author workspace
        ↑                         ↑
        └──── both keep working ──┘
+```
+
+**Start with a normal project. Connect the authoring environment when you want it.**
+
+```bash
+# Create a project
+npx uniweb create
+
+# Sign in when you want visual authoring
+pnpm uniweb login
+
+# Sync the project with the author workspace
+pnpm uniweb sync
 ```
 
 ---
@@ -71,16 +79,7 @@ Developers and authors can keep working at the same time, in the tools each side
 | Schemas and configuration | Forms and structured records |
 | Vite and local development | Live visual editing |
 | Files and Git | Content and composition |
-| `push` · `pull` · `sync` | Changes appear live |
-
-The CLI keeps the two environments connected:
-
-| Command | What it does |
-| --- | --- |
-| `pnpm uniweb push` | Push local components, schemas, and content to the Uniweb App. |
-| `pnpm uniweb pull` | Bring authored content back into the local project. |
-| `pnpm uniweb sync` | Synchronize the local project and the app. |
-| `pnpm uniweb publish` | Synchronize with the app and publish. |
+| `push` · `pull` · `sync` · `publish` | Changes appear live |
 
 Authors never need to think about synchronization. They work in the visual app, where changes appear live. Developers keep their editor, terminal, Git history, and deployment workflow.
 
@@ -100,6 +99,30 @@ flowchart LR
 ```
 
 **The CLI is the bridge between the two workflows.**
+
+| Command | What it does |
+| --- | --- |
+| `pnpm uniweb push` | Push local components, schemas, and content to the Uniweb App. |
+| `pnpm uniweb pull` | Bring authored content back into the local project. |
+| `pnpm uniweb sync` | Synchronize the local project and the app. |
+| `pnpm uniweb publish` | Synchronize with the app and publish. |
+
+---
+
+## Open source project. Connected authoring platform.
+
+Connecting the Uniweb App doesn't mean moving the project into the app.
+
+| Open-source project | Uniweb App |
+| --- | --- |
+| React, Vite, files, packages | Visual authoring |
+| Git and normal development workflows | Content and composition |
+| Components and schemas | Interfaces generated from those definitions |
+| Build and deploy with standard web tooling | Live collaboration and managed content |
+
+The framework can be used on its own. When a team needs visual authoring, the CLI connects the same project to the app instead of replacing the developer workflow with a proprietary builder.
+
+**The codebase remains the developer environment. The app becomes the author environment.**
 
 ---
 
@@ -156,7 +179,7 @@ content
 
 These outputs can be derived from the same underlying content rather than scraped back out of rendered HTML or maintained separately.
 
-Redesign the site and the content remains the same. Add a language and the derived outputs can follow it. Search and agent-readable representations stay aligned with what was actually published.
+Redesign the site and the content remains the same. Add a language and the derived outputs can follow it. The website, search index, and agent-readable representations stay aligned because they derive from the same source.
 
 **Store the content once. Project it into the forms different consumers need.**
 
@@ -178,34 +201,13 @@ A constrained, semantic component system is one answer worth exploring.
 
 ---
 
-## Open source project. Connected authoring platform.
-
-Connecting the Uniweb App doesn't mean moving the project into the app.
-
-| Open-source project | Uniweb App |
-| --- | --- |
-| React, Vite, files, packages | Visual authoring |
-| Git and normal development workflows | Content and composition |
-| Components and schemas | Interfaces generated from those definitions |
-| Build and deploy with standard web tooling | Live collaboration and managed content |
-
-The framework can be used on its own. When a team needs visual authoring, the CLI connects the same project to the app instead of replacing the developer workflow with a proprietary builder.
-
-```bash
-npx uniweb create
-```
-
-**The codebase remains the developer environment. The app becomes the author environment.**
-
----
-
 ## Component Content Architecture
 
 These ideas are part of an architectural model we call **Component Content Architecture (CCA)**.
 
 CCA keeps content, components, and composition distinct while making their relationships explicit. That separation is what allows the same content and component system to support code-based development, visual authoring, structured data, multiple sites, derived outputs, and agent workflows without creating separate versions of the website.
 
-The point isn't another CMS abstraction. It is a cleaner boundary between **what the site knows**, **how it can present it**, and **who is working with it**.
+The point isn't another CMS abstraction. It is a cleaner boundary between **content**, **presentation**, and the interfaces through which people and software work with them.
 
 ---
 
