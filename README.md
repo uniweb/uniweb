@@ -5,7 +5,7 @@
 
 # Uniweb
 
-## What if your component system defined the authoring experience?
+## What if visual editing and a normal Git workflow were two interfaces to the same website?
 
 Uniweb is an open-source React framework and a connected visual authoring platform.
 
