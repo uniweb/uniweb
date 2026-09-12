@@ -5,6 +5,11 @@
 
 # Uniweb
 
+
+```bash
+npx uniweb create
+```
+
 ## What if visual editing and a normal Git workflow were two interfaces to the same website?
 
 Uniweb is an open-source React framework and a connected visual authoring platform.
@@ -27,41 +32,6 @@ developer project ⇄ Uniweb ⇄ author workspace
        └──── both keep working ──┘
 ```
 
-## One system, two working environments
-
-Developers and authors don't need to work in the same tool.
-
-| Developers                 | Authors                      |
-| -------------------------- | ---------------------------- |
-| React components           | Visual components            |
-| Schemas and configuration  | Forms and structured records |
-| Vite and local development | Live visual editing          |
-| Files and Git              | Content and composition      |
-| `push` · `pull` · `sync`   | Changes appear live          |
-
-Uniweb connects those environments without collapsing one into the other.
-
-```mermaid
-flowchart LR
-    D["Dev project"]
-    C["Uniweb CLI"]
-    A["Uniweb App<br/>visual authoring · CMS"]
-    S["Hosted dynamic site"]
-    H["Any static web host"]
-
-    D <--> C
-    C <-->|"sync"| A
-    C -->|"publish"| S
-    A -->|"publish"| S
-    C -->|"deploy"| H
-```
-
-Developers keep their project, editor, terminal, Git history, and deployment workflow.
-
-Authors get a visual environment built around the system the developers created.
-
-And the two can work at the same time.
-
 ---
 
 ## Components become an authoring vocabulary
@@ -77,22 +47,15 @@ For a developer:
 <Team />
 ```
 
-For an author, those same components can become meaningful things they can understand and configure:
+For an author, those same components become meaningful building blocks:
 
-**Hero**
-Heading · Image · Call to action · Layout
+| Component | What an author works with |
+| --- | --- |
+| **Hero** | Heading · Image · Call to action · Layout |
+| **Publication List** | Source · Filters · Sorting · Presentation |
+| **Team** | People · Roles · Grouping · Style |
 
-**Publication List**
-Source · Filters · Sorting · Presentation
-
-**Team**
-People · Roles · Grouping · Style
-
-The author doesn't manipulate JSX, HTML, or arbitrary layout primitives.
-
-The developer doesn't build a separate editing UI for every section of the site.
-
-The component system already contains much of the knowledge needed to connect the two.
+The author doesn't manipulate JSX, HTML, or arbitrary layout primitives. The developer doesn't build a separate editing UI for every section of the site.
 
 > **You build the components. Uniweb builds the authoring experience.**
 
@@ -100,174 +63,114 @@ The component system already contains much of the knowledge needed to connect th
 
 ## The handoff disappears
 
-Traditional website workflows often have a point where development ends and content management begins.
+Developers and authors can keep working at the same time, in the tools each side prefers.
 
-Uniweb is designed so that boundary can remain live.
+| Developers | Authors |
+| --- | --- |
+| React components | Visual components |
+| Schemas and configuration | Forms and structured records |
+| Vite and local development | Live visual editing |
+| Files and Git | Content and composition |
+| `push` · `pull` · `sync` | Changes appear live |
 
-Developers can continue evolving components and schemas while authors are already working on the site.
+The CLI keeps the two environments connected:
 
-```bash
-pnpm uniweb push
+| Command | What it does |
+| --- | --- |
+| `pnpm uniweb push` | Push local components, schemas, and content to the Uniweb App. |
+| `pnpm uniweb pull` | Bring authored content back into the local project. |
+| `pnpm uniweb sync` | Synchronize the local project and the app. |
+| `pnpm uniweb publish` | Synchronize with the app and publish. |
+
+Authors never need to think about synchronization. They work in the visual app, where changes appear live. Developers keep their editor, terminal, Git history, and deployment workflow.
+
+```mermaid
+flowchart LR
+    D["Git project<br/>React · schemas"]
+    C["Uniweb CLI"]
+    A["Uniweb App<br/>visual authoring · CMS"]
+    S["Hosted dynamic site"]
+    H["Any static web host"]
+
+    D <--> C
+    C <-->|"push · pull · sync"| A
+    C -->|"publish"| S
+    A -->|"publish"| S
+    C -->|"deploy"| H
 ```
-
-Push local changes to the Uniweb App. Updated capabilities become available to authors immediately.
-
-```bash
-pnpm uniweb pull
-```
-
-Bring authored content back into the local project.
-
-```bash
-pnpm uniweb sync
-```
-
-Keep the two sides synchronized without thinking in terms of a one-way handoff.
-
-```bash
-pnpm uniweb publish
-```
-
-Publishing also synchronizes the project with the app.
-
-Authors don't need to run these commands. They work in the visual environment, where their changes appear live.
-
-Developers don't need to abandon Git or adopt the visual editor as their development environment.
 
 **The CLI is the bridge between the two workflows.**
 
 ---
 
-## Your schema becomes their workspace
+## Define the structure once. Authors get the workspace.
 
 The same idea extends beyond page composition.
 
-Suppose a site needs structured content for:
+A site may need structured content for people, publications, events, courses, products, projects, or something specific to the organization.
 
-* people
-* publications
-* events
-* courses
-* products
-* projects
+Developers define those structures as part of the project. Uniweb presents them to authors as interfaces for creating and managing records.
 
-A developer can define the structure as part of the project.
-
-Uniweb can present that structure to authors as an interface for creating and managing records.
-
-The developer thinks in terms of schemas, data relationships, and components.
-
-The author sees fields, records, choices, and content.
-
-No separate admin application has to be built just to make the data editable.
-
----
-
-## Code and visual authoring don't have to compete
-
-A lot of web tooling implicitly asks teams to choose.
-
-A developer-controlled site gives you React, packages, Git, CI, local development, and architectural freedom — but content editing can become technical.
-
-A visual site builder gives authors an approachable environment — but developers may have to build inside someone else's abstraction.
-
-Uniweb takes a different approach.
-
-The site remains a real software project.
-
-The components remain real React components.
-
-The content remains distinct from presentation.
-
-And when visual authoring is useful, the Uniweb App becomes another interface to the same system rather than a replacement for it.
-
----
-
-## Open source and hosted authoring are complementary
-
-The Uniweb framework is open source.
-
-You can create a project, develop it locally, keep it in Git, build it, and deploy it using standard web infrastructure.
-
-```bash
-npx uniweb create
+```js
+export default {
+  data: {
+    people: '@std/person',
+    events: '@/schemas/event.json',
+    products: '@/schemas/product.json'
+  }
+}
 ```
 
-Connecting that project to the Uniweb App doesn't require moving development into a proprietary builder.
+The developer thinks in terms of schemas, relationships, and components. The author sees fields, records, choices, and content.
 
-Instead, the CLI synchronizes the project with the authoring platform.
-
-That means open source and SaaS don't have to represent competing architectures:
-
-**the open-source project is the developer environment; the app is the author environment.**
-
-Use the framework on its own when that's all you need. Connect it when other people need to work on the site visually.
+**No separate admin application is required just to make the data editable.**
 
 ---
 
-## Content can exist beyond a page
+## Content should outlive the page that first used it
 
-The separation between content and presentation leads to another useful idea.
-
-A person isn't fundamentally a block on a department homepage.
-
-A publication doesn't fundamentally belong to the first website that entered it.
-
-Neither does an event, course, project, product, or organization.
+A person isn't fundamentally a block on a department homepage. A publication doesn't belong to whichever website entered it first. Neither does an event, course, project, product, or organization.
 
 Those are entities.
 
-Uniweb can model structured content independently from the pages and components that present it, allowing the same content to appear in different contexts and across different sites.
-
-For organizations with many websites, this changes the model:
+Uniweb can model structured content independently from the pages and components that present it, so the same content can appear in different contexts and across different sites.
 
 > **Content can belong to the organization. Websites become views over it.**
 
----
-
-## Component Content Architecture
-
-Uniweb calls the underlying model **Component Content Architecture (CCA)**.
-
-It keeps several concerns distinct:
-
-**Content**
-What the site knows and says.
-
-**Components**
-How content can be presented and interacted with.
-
-**Composition**
-How components and content are assembled into pages and experiences.
-
-**Authoring**
-How people interact with those structures without working directly in code.
-
-The relationships between these concerns are explicit rather than hidden in templates or scattered through application code.
-
-That separation is what allows developers and authors to use different interfaces without creating two independent versions of the website.
+That matters most when many sites need to share the same people, publications, projects, events, courses, or other organizational knowledge without copying it into separate CMS silos.
 
 ---
 
-## Built for collaboration with people — and agents
+## One content source. Many useful projections.
 
-The same architecture becomes interesting when AI enters the workflow.
+Once content is independent from presentation, the rendered website is only one possible output.
 
-Most AI website generation starts with a blank canvas:
+```text
+content
+  ├── rendered site
+  ├── llms.txt
+  ├── route-level Markdown
+  ├── search index
+  └── localized variants
+```
 
-> Generate some HTML, CSS, and JavaScript.
+These outputs can be derived from the same underlying content rather than scraped back out of rendered HTML or maintained separately.
 
-But an existing site rarely wants arbitrary output.
+Redesign the site and the content remains the same. Add a language and the derived outputs can follow it. Search and agent-readable representations stay aligned with what was actually published.
 
-It has components, schemas, design rules, content structures, languages, and conventions.
+**Store the content once. Project it into the forms different consumers need.**
 
-A Uniweb project gives an agent a real system to work with.
+---
 
-An agent can operate in the same file-based environment as a developer: create or modify components, define schemas, work with structured content, and use the CLI.
+## AI works better with a vocabulary than a blank canvas
 
-Once those changes are synchronized, authors can immediately use the new capabilities visually.
+A real website rarely wants an agent inventing arbitrary HTML and CSS every time it makes a change.
 
-Instead of asking AI to continually invent websites from scratch, we can ask a different question:
+It already has components, schemas, design rules, content structures, languages, and conventions.
+
+A Uniweb project gives agents that existing system to work within. An agent can operate in the same file-based environment as a developer: create or modify components, define schemas, work with structured content, and use the CLI.
+
+Once synchronized, those new capabilities become available to authors in the visual app.
 
 > **What should the substrate for AI-created websites be?**
 
@@ -275,54 +178,49 @@ A constrained, semantic component system is one answer worth exploring.
 
 ---
 
-## Why we're building Uniweb
+## Open source project. Connected authoring platform.
 
-Uniweb sits at the intersection of several larger ideas.
+Connecting the Uniweb App doesn't mean moving the project into the app.
 
-### React & frontend architecture
+| Open-source project | Uniweb App |
+| --- | --- |
+| React, Vite, files, packages | Visual authoring |
+| Git and normal development workflows | Content and composition |
+| Components and schemas | Interfaces generated from those definitions |
+| Build and deploy with standard web tooling | Live collaboration and managed content |
 
-Why do we build a site's component system and then separately integrate an authoring system?
+The framework can be used on its own. When a team needs visual authoring, the CLI connects the same project to the app instead of replacing the developer workflow with a proprietary builder.
 
-### Design systems
+```bash
+npx uniweb create
+```
 
-What happens when a design system becomes not only documentation for developers, but the vocabulary authors actually use?
+**The codebase remains the developer environment. The app becomes the author environment.**
 
-### CMS architecture
+---
 
-What if the frontend's components and schemas helped define the CMS, instead of a generic CMS defining the shape the frontend has to consume?
+## Component Content Architecture
 
-### Developer–author collaboration
+These ideas are part of an architectural model we call **Component Content Architecture (CCA)**.
 
-Why should website development require periodic handoffs when both sides can remain connected throughout the life of the site?
+CCA keeps content, components, and composition distinct while making their relationships explicit. That separation is what allows the same content and component system to support code-based development, visual authoring, structured data, multiple sites, derived outputs, and agent workflows without creating separate versions of the website.
 
-### Structured organizational content
-
-Why should people, publications, projects, events, and other organizational entities be duplicated across independent site databases?
-
-### Multilingual authoring
-
-What does web architecture look like when languages are part of the content system from the beginning rather than a translation layer added afterward?
-
-### AI & web development
-
-What happens when agents create within an existing vocabulary of components, schemas, content, and design constraints instead of generating arbitrary markup?
-
-These questions are a large part of what the Uniweb project is exploring.
+The point isn't another CMS abstraction. It is a cleaner boundary between **what the site knows**, **how it can present it**, and **who is working with it**.
 
 ---
 
 ## Start here
 
-| I want to…                            | Start here                                                            |
-| ------------------------------------- | --------------------------------------------------------------------- |
-| **Build with Uniweb**                 | [uniweb/cli](https://github.com/uniweb/cli)                           |
-| **Learn how Uniweb works**            | [uniweb.io](https://uniweb.io)                                        |
-| **Use the visual authoring platform** | [uniweb.app](https://uniweb.app)                                      |
-| **Browse the framework**              | [all Uniweb repositories](https://github.com/uniweb?tab=repositories) |
+| I want to… | Start here |
+| --- | --- |
+| **Build with Uniweb** | [uniweb/cli](https://github.com/uniweb/cli) |
+| **Learn how Uniweb works** | [uniweb.io](https://uniweb.io) |
+| **Use the visual authoring platform** | [uniweb.app](https://uniweb.app) |
+| **Browse the framework** | [all Uniweb repositories](https://github.com/uniweb?tab=repositories) |
 
 The **[`uniweb/cli`](https://github.com/uniweb/cli)** repository is the developer entry point.
 
-The full framework spans 20+ focused repositories covering the runtime, build system, content architecture, schemas, presentation, developer tooling, and other parts of the ecosystem.
+The full framework spans 20+ focused repositories covering runtime, builds, content architecture, schemas, presentation, developer tooling, and other parts of the ecosystem.
 
 ---
 
