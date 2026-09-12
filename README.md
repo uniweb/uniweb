@@ -29,7 +29,7 @@ Uniweb connects those environments without collapsing one into the other.
 
 ```mermaid
 flowchart LR
-    D["Developer project<br/>React · schemas · md · Git"]
+    D["Dev project"]
     C["Uniweb CLI"]
     A["Uniweb App<br/>visual authoring · CMS"]
     S["Hosted dynamic site"]
@@ -39,7 +39,7 @@ flowchart LR
     C <-->|"sync"| A
     C -->|"publish"| S
     A -->|"publish"| S
-    D -->|"deploy"| H
+    C -->|"deploy"| H
 ```
 
 Developers keep their project, editor, terminal, Git history, and deployment workflow.
