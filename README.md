@@ -98,7 +98,7 @@ flowchart LR
     C -->|"deploy"| H
 ```
 
-**The CLI is the bridge between the two workflows.**
+### The CLI is the bridge between the two workflows
 
 | Command | What it does |
 | --- | --- |
