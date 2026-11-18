@@ -122,7 +122,7 @@ flowchart TB
 
 The backend doesn't have to execute every piece of application logic. Many calculations, transformations, and document-generation tasks can run in the browser. When trusted server-side computation is necessary, Uniweb's managed platform supports JavaScript functions on Cloudflare Workers; specialized workloads can use external services.
 
-If you're familiar with database-first backend-as-a-service products such as Supabase, the distinction is **where the abstraction starts**: Uniweb provides a domain-oriented application model and reusable backend mechanisms above PostgreSQL, rather than making database tables the primary application interface.
+If you're familiar with backend-as-a-service products such as Supabase, the distinction is **where the abstraction starts**: Uniweb provides a domain-oriented application model and reusable backend mechanisms above PostgreSQL, rather than making database tables the primary application interface.
 
 ## Explore the open-source projects
 
