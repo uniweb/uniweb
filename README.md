@@ -5,7 +5,45 @@
 
 # Uniweb
 
-## What if visual editing and a normal Git workflow were two interfaces to the same website?
+### Build websites and web apps. Leave the backend to Uniweb.
+
+**Build in React. Edit visually. Sync through Git.**
+
+Uniweb is an open-source React framework and part of an integrated platform for building, editing, and running web applications. Create your own components and data models. Use a visual editor for content, and an **Application Engine** for the common backend capabilities you would otherwise have to build yourself.
+
+[**Website**](https://uniweb.io) · [**Documentation**](https://uniweb.io/docs) · [**Developer CLI**](https://github.com/uniweb/cli) · [**Visual App**](https://www.uniweb.app) · [**Discord**](https://discord.gg/TkmkA5vH)
+
+## Start with an AI agent—or your editor
+
+Give this to Claude Code, Codex, Cursor, or another coding agent:
+
+```text
+Build a website or web app with Uniweb.
+Start with `npx uniweb@latest start`
+
+I want to build: [describe your website or web app]
+```
+
+Or start directly in your terminal:
+
+```bash
+npx uniweb@latest create
+```
+
+Uniweb projects are normal React projects. Work with Vite, files, and Git; use the CLI to inspect, validate, synchronize, and publish. Agents can follow `AGENTS.md` and Markdown documentation, but the resulting code is yours to maintain.
+
+## One platform, four cooperating parts
+
+| | What it provides |
+| --- | --- |
+| **[Framework](https://github.com/uniweb/cli)** | React components, structured content, schemas, Vite and Git-based development. Open source. |
+| **[Backend](https://uniweb.io/backend)** | The Application Engine written in Rust. Generic entity storage, typed references, identity, permissions, and common backend services. A single binary called `uniwebd` based on our open-source [Actus](https://crates.io/crates/actus) web framework. |
+| **[Visual CMS](https://www.uniweb.app)** | Editing controls derived from your components and schemas. Authors work in the browser while developers keep working in Git. It syncs content and schemas with your git project. It previews with your code. |
+| **[Managed Hosting](https://uniweb.io)** | Publishing, edge delivery, just-in-time rendering, and dedicated application backends when needed. |
+
+The framework can also be used without the managed platform. Static sites don't need `uniwebd`. For application development, the open-source [`@uniweb/api`](https://github.com/uniweb/api) includes a Node.js mock backend; the real Application Engine is available through Uniweb's managed infrastructure.
+
+## What makes <ins>Uniweb Framework</ins> different?
 
 Uniweb is an open-source React framework and a connected visual authoring platform.
 
@@ -40,9 +78,7 @@ pnpm uniweb login
 pnpm uniweb sync
 ```
 
----
-
-## Components become an authoring vocabulary
+### Components become an authoring vocabulary
 
 A component can have two interfaces.
 
@@ -67,169 +103,34 @@ The author doesn't manipulate JSX, HTML, or arbitrary layout primitives. The dev
 
 > **You build the components. Uniweb builds the authoring experience.**
 
----
+## What makes <ins>Uniweb Backend</ins> different?
 
-## The handoff disappears
+Game developers use engines so they don't rebuild rendering, physics, and other shared systems for every game. Web applications share a lot of machinery too.
 
-Developers and authors can keep working at the same time, in the tools each side prefers.
+**An Application Engine is a reusable layer above the database.** It handles structured entities, relationships, persistence, identity, access control, and other common services. You define your domain and what makes your application different.
 
-| Developers | Authors |
-| --- | --- |
-| React components | Visual components |
-| Schemas and configuration | Forms and structured records |
-| Vite and local development | Live visual editing |
-| Files and Git | Content and composition |
-| `push` · `pull` · `sync` · `publish` | Changes appear live |
-
-Authors never need to think about synchronization. They work in the visual app, where changes appear live. Developers keep their editor, terminal, Git history, and deployment workflow.
+In Uniweb, that engine is **`uniwebd`**: a proprietary Rust server backed by PostgreSQL. It is distinct from the open-source React framework. Every solution using Uniweb's managed backend gets its own `uniwebd` deployment and PostgreSQL database.
 
 ```mermaid
-flowchart LR
-    D["Git project<br/>React · schemas"]
-    C["Uniweb CLI"]
-    A["Uniweb App<br/>visual authoring · CMS"]
-    S["Hosted dynamic site"]
-    H["Any static web host"]
-
-    D <--> C
-    C <-->|"push · pull · sync"| A
-    C -->|"publish"| S
-    A -->|"publish"| S
-    C -->|"deploy"| H
+flowchart TB
+    Web["Your React website or app"]
+    Web -. "Optional backend" .-> Engine["Application Engine · uniwebd"]
+    Engine --> DB[("PostgreSQL")]
+    Web -. "Optional visual authoring" .-> Editor["Uniweb App · Git sync"]
+    Web -. "Optional managed deployment" .-> Cloud["Uniweb Hosting · edge rendering"]
 ```
 
-### The CLI is the bridge between the two workflows
+The backend doesn't have to execute every piece of application logic. Many calculations, transformations, and document-generation tasks can run in the browser. When trusted server-side computation is necessary, Uniweb's managed platform supports JavaScript functions on Cloudflare Workers; specialized workloads can use external services.
 
-| Command | What it does |
-| --- | --- |
-| `pnpm uniweb push` | Push local components, schemas, and content to the Uniweb App. |
-| `pnpm uniweb pull` | Bring authored content back into the local project. |
-| `pnpm uniweb sync` | Synchronize the local project and the app. |
-| `pnpm uniweb publish` | Synchronize with the app and publish. |
+If you're familiar with database-first backend-as-a-service products such as Supabase, the distinction is **where the abstraction starts**: Uniweb provides a domain-oriented application model and reusable backend mechanisms above PostgreSQL, rather than making database tables the primary application interface.
 
----
+## Explore the open-source projects
 
-## Open source project. Connected authoring platform.
+- **[Uniweb CLI](https://github.com/uniweb/cli)** — Project creation, local development, validation, Git synchronization, and publishing.
+- **[Uniweb API](https://github.com/uniweb/api)** — Client API and local mock backend for applications.
+- **[Actus](https://crates.io/crates/actus)** — Our open-source Rust web framework, used to build `uniwebd`.
+- **[All Uniweb repositories](https://github.com/uniweb?tab=repositories)** — Framework packages, tooling, and supporting libraries.
 
-Connecting the Uniweb App doesn't mean moving the project into the app.
+The Uniweb framework and its open-source tooling are licensed under **Apache 2.0**. `uniwebd` is proprietary. Uniweb is developed by [Proximify](https://proximify.com).
 
-| Open-source project | Uniweb App |
-| --- | --- |
-| React, Vite, files, packages | Visual authoring |
-| Git and normal development workflows | Content and composition |
-| Components and schemas | Interfaces generated from those definitions |
-| Build and deploy with standard web tooling | Live collaboration and managed content |
-
-The framework can be used on its own. When a team needs visual authoring, the CLI connects the same project to the app instead of replacing the developer workflow with a proprietary builder.
-
-**The codebase remains the developer environment. The app becomes the author environment.**
-
----
-
-## Define the structure once. Authors get the workspace.
-
-The same idea extends beyond page composition.
-
-A site may need structured content for people, publications, events, courses, products, projects, or something specific to the organization.
-
-Developers define those structures as part of the project. Uniweb presents them to authors as interfaces for creating and managing records.
-
-```js
-export default {
-  data: {
-    people: '@std/person',
-    events: '@/schemas/event.json',
-    products: '@/schemas/product.json'
-  }
-}
-```
-
-The developer thinks in terms of schemas, relationships, and components. The author sees fields, records, choices, and content.
-
-**No separate admin application is required just to make the data editable.**
-
----
-
-## Content should outlive the page that first used it
-
-A person isn't fundamentally a block on a department homepage. A publication doesn't belong to whichever website entered it first. Neither does an event, course, project, product, or organization.
-
-Those are entities.
-
-Uniweb can model structured content independently from the pages and components that present it, so the same content can appear in different contexts and across different sites.
-
-> **Content can belong to the organization. Websites become views over it.**
-
-That matters most when many sites need to share the same people, publications, projects, events, courses, or other organizational knowledge without copying it into separate CMS silos.
-
----
-
-## One content source. Many useful projections.
-
-Once content is independent from presentation, the rendered website is only one possible output.
-
-```text
-content
-  ├── rendered site
-  ├── llms.txt
-  ├── route-level Markdown
-  ├── search index
-  └── localized variants
-```
-
-These outputs can be derived from the same underlying content rather than scraped back out of rendered HTML or maintained separately.
-
-Redesign the site and the content remains the same. Add a language and the derived outputs can follow it. The website, search index, and agent-readable representations stay aligned because they derive from the same source.
-
-**Store the content once. Project it into the forms different consumers need.**
-
----
-
-## AI works better with a vocabulary than a blank canvas
-
-A real website rarely wants an agent inventing arbitrary HTML and CSS every time it makes a change.
-
-It already has components, schemas, design rules, content structures, languages, and conventions.
-
-A Uniweb project gives agents that existing system to work within. An agent can operate in the same file-based environment as a developer: create or modify components, define schemas, work with structured content, and use the CLI.
-
-Once synchronized, those new capabilities become available to authors in the visual app.
-
-> **What should the substrate for AI-created websites be?**
-
-A constrained, semantic component system is one answer worth exploring.
-
----
-
-## Component Content Architecture
-
-These ideas are part of an architectural model we call **Component Content Architecture (CCA)**.
-
-CCA keeps content, components, and composition distinct while making their relationships explicit. That separation is what allows the same content and component system to support code-based development, visual authoring, structured data, multiple sites, derived outputs, and agent workflows without creating separate versions of the website.
-
-The point isn't another CMS abstraction. It is a cleaner boundary between **content**, **presentation**, and the interfaces through which people and software work with them.
-
----
-
-## Start here
-
-| I want to… | Start here |
-| --- | --- |
-| **Build with Uniweb** | [uniweb/cli](https://github.com/uniweb/cli) |
-| **Learn how Uniweb works** | [uniweb.io](https://uniweb.io) |
-| **Use the visual authoring platform** | [uniweb.app](https://uniweb.app) |
-| **Browse the framework** | [all Uniweb repositories](https://github.com/uniweb?tab=repositories) |
-
-The **[`uniweb/cli`](https://github.com/uniweb/cli)** repository is the developer entry point.
-
-The full framework spans 20+ focused repositories covering runtime, builds, content architecture, schemas, presentation, developer tooling, and other parts of the ecosystem.
-
----
-
-## Community
-
-[Website](https://uniweb.io) · [Uniweb App](https://uniweb.app) · [Discord](https://discord.gg/TkmkA5vH) · [X / Twitter](https://twitter.com/uniwebcms)
-
-Uniweb is open source under the **Apache 2.0** license.
-
-<sub>Uniweb is a trademark of Proximify Inc.</sub>
+[Website](https://uniweb.io) · [Discord](https://discord.gg/TkmkA5vH) · [X](https://x.com/uniwebcms)
