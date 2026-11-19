@@ -37,7 +37,7 @@ Uniweb projects are normal React projects. Work with Vite, files, and Git; use t
 | | What it provides |
 | --- | --- |
 | **[Framework](https://github.com/uniweb/cli)** | React components, structured content, schemas, Vite and Git-based development. Open source. |
-| **[Backend](https://uniweb.io/backend)** | The Application Engine written in Rust. Generic entity storage, typed references, identity, permissions, and common backend services. The backend is based on our open-source [Actus](https://crates.io/crates/actus) web framework. |
+| **[Backend](https://uniweb.io/backend)** | The Application Engine written in Rust. Generic entity storage, typed references, identity, permissions, and common backend services. The backend is built on our open-source [Actus](https://crates.io/crates/actus) web framework. |
 | **[Frontend](https://www.uniweb.app)** | CMS and visual website composer. Editing controls derived from your components and schemas. Authors work in the browser while developers keep working in Git. It syncs content and schemas with your git project. It previews with your code. |
 | **[Hosting](https://uniweb.io)** | Managed hosting at the edge. Publishing, edge delivery, just-in-time rendering, and dedicated application backends when needed. |
 
