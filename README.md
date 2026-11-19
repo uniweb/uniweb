@@ -37,11 +37,11 @@ Uniweb projects are normal React projects. Work with Vite, files, and Git; use t
 | | What it provides |
 | --- | --- |
 | **[Framework](https://github.com/uniweb/cli)** | React components, structured content, schemas, Vite and Git-based development. Open source. |
-| **[Backend](https://uniweb.io/backend)** | The Application Engine written in Rust. Generic entity storage, typed references, identity, permissions, and common backend services. A single binary called `uniwebd` based on our open-source [Actus](https://crates.io/crates/actus) web framework. |
+| **[Backend](https://uniweb.io/backend)** | The Application Engine written in Rust. Generic entity storage, typed references, identity, permissions, and common backend services. A backend implantation based on our open-source [Actus](https://crates.io/crates/actus) web framework. |
 | **[Frontend](https://www.uniweb.app)** | CMS and visual website composer. Editing controls derived from your components and schemas. Authors work in the browser while developers keep working in Git. It syncs content and schemas with your git project. It previews with your code. |
 | **[Hosting](https://uniweb.io)** | Managed hosting at the edge. Publishing, edge delivery, just-in-time rendering, and dedicated application backends when needed. |
 
-The framework can also be used without the managed platform. Static sites don't need `uniwebd`. For application development, the open-source [`@uniweb/api`](https://github.com/uniweb/api) includes a Node.js mock backend; the real Application Engine is available through Uniweb's managed infrastructure.
+The framework can also be used without the managed platform. Static or dynamic sites don't need a dedicated backend. For application development, the open-source [`@uniweb/api`](https://github.com/uniweb/api) includes a Node.js mock backend; the real Application Engine is available through Uniweb's managed infrastructure.
 
 ## What makes <ins>Uniweb Framework</ins> different?
 
@@ -109,12 +109,12 @@ Game developers use engines so they don't rebuild rendering, physics, and other 
 
 **An Application Engine is a reusable layer above the database.** It handles structured entities, relationships, persistence, identity, access control, and other common services. You define your domain and what makes your application different.
 
-In Uniweb, that engine is **`uniwebd`**: a proprietary Rust server backed by PostgreSQL. It is distinct from the open-source React framework. Every solution using Uniweb's managed backend gets its own `uniwebd` deployment and PostgreSQL database.
+In Uniweb, that engine is a proprietary Rust server backed by PostgreSQL. It is distinct from the open-source React framework. Every solution using Uniweb's managed backend gets its own backend deployment and PostgreSQL database.
 
 ```mermaid
 flowchart TB
     Web["Your React website or app"]
-    Web -. "Optional backend" .-> Engine["Application Engine · uniwebd"]
+    Web -. "Optional backend" .-> Engine["Application Engine"]
     Engine --> DB[("PostgreSQL")]
     Web -. "Optional visual authoring" .-> Editor["Uniweb App · Git sync"]
     Web -. "Optional managed deployment" .-> Cloud["Uniweb Hosting · edge rendering"]
@@ -128,9 +128,9 @@ If you're familiar with backend-as-a-service products such as Supabase, the dist
 
 - **[Uniweb CLI](https://github.com/uniweb/cli)** — Project creation, local development, validation, Git synchronization, and publishing.
 - **[Uniweb API](https://github.com/uniweb/api)** — Client API and local mock backend for applications.
-- **[Actus](https://crates.io/crates/actus)** — Our open-source Rust web framework, used to build `uniwebd`.
+- **[Actus](https://crates.io/crates/actus)** — Our open-source Rust web framework, used to build the Uniweb Application Engine.
 - **[All Uniweb repositories](https://github.com/uniweb?tab=repositories)** — Framework packages, tooling, and supporting libraries.
 
-The Uniweb framework and its open-source tooling are licensed under **Apache 2.0**. `uniwebd` is proprietary. Uniweb is developed by [Proximify](https://proximify.com).
+The Uniweb framework and its open-source tooling are licensed under **Apache 2.0**. The Uniweb backend (Application Engine) is proprietary. Uniweb is developed by [Proximify](https://proximify.com).
 
 [Website](https://uniweb.io) · [Discord](https://discord.gg/TkmkA5vH) · [X](https://x.com/uniwebcms)
